@@ -1,3 +1,5 @@
-del main.exe
+echo off
 g++ main.cpp -o main.exe
-main.exe code.n
+main.exe code.ne
+del main.exe
+exit
