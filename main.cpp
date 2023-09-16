@@ -19,8 +19,10 @@ string getSource(string path)
 enum TokenType
 {
     RETURN,
+    INT,
     INTV,
     SEMI,
+    EQUAL,
     IDENTIFIER
 };
 
@@ -47,38 +49,60 @@ void tokenize(string src)
     for (int i = 0; i < length; i++)
     {
         char c = src.at(i);
-        if (isalpha(c))
+        int line = 1;
+        switch (c)
         {
-            buffer += c;
-            if (!isalpha(src.at(i + 1)))
+        case ';':
+            addToken(SEMI, ";");
+            break;
+        case '=':
+            addToken(EQUAL, "=");
+            break;
+        default:
+            if (isalpha(c))
             {
-                cout << "Buffer: " << buffer << endl;
-                if (buffer == "return")
+                buffer += c;
+                if (!isalpha(src.at(i + 1)))
                 {
-                    addToken(RETURN, buffer);
+                    cout << "Buffer: " << buffer << endl;
+
+                    if (buffer == "return")
+                    {
+                        addToken(RETURN, buffer);
+                        buffer.clear();
+                    }
+                    else
+                    {
+                        addToken(IDENTIFIER, buffer);
+                        buffer.clear();
+                    }
                 }
-                else
-                {
-                    addToken(IDENTIFIER, buffer);
-                }
-                buffer.clear();
             }
-        }
-        if (isdigit(c))
-        {
-            buffer += c;
-            if (!isdigit(src.at(i + 1)))
+            else if (isdigit(c))
             {
-                cout << "Buffer: " << buffer << endl;
-                addToken(INTV, buffer);
-                buffer.clear();
+                buffer += c;
+                if (!isdigit(src.at(i + 1)))
+                {
+                    cout << "Buffer: " << buffer << endl;
+                    addToken(INTV, buffer);
+                    buffer.clear();
+                }
             }
-        }
-        if (c == ';')
-        {
-            string s;
-            s += c;
-            addToken(SEMI, s);
+            else if (isspace(c))
+            {
+                if (c == '\n')
+                {
+                    line++;
+                }
+                continue;
+            }
+            else
+            {
+                cerr << "Error: undefined symbol at line " << line << ":" << endl;
+                cerr << "-> " << src.substr(0, src.find("\n")) << endl;
+                exit(EXIT_FAILURE);
+            }
+            break;
         }
     }
 };
@@ -104,6 +128,7 @@ int main(int argc, char *argv[])
 
     // reading the source file
     string source = getSource(argv[1]);
+    cout << source << endl;
     // converting to tokens
     tokenize(source);
     showTokens();
