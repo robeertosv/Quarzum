@@ -6,6 +6,23 @@
 #include "tokenUtilities.h"
 
 using namespace std;
+string getSource(string path)
+{
+    ifstream input(path);
+    string source;
+    string line;
+    while (getline(input, line))
+    {
+        source += line + "\n";
+    }
+    return source;
+}
+
+/*
+
+    DIVIDING THE SOURCE CODE INTO SINGLE TOKENS
+
+*/
 
 vector<Token> tokens;
 void addToken(TokenType type, optional<string> value = "")
@@ -18,7 +35,6 @@ void addToken(TokenType type, optional<string> value = "")
 
 void split(string src)
 {
-
     int length = src.length();
     string buffer;
     for (int i = 0; i < length; i++)
@@ -33,7 +49,6 @@ void split(string src)
         int line = 1;
 
         // scanning by characters
-
         if (c == ' ')
         {
             if (buffer[0] == '"')
@@ -61,7 +76,6 @@ void split(string src)
         // Keywords and identifiers
         else if (isalpha(c))
         {
-
             buffer += c;
             if (!isalpha(next) && buffer[0] != '"')
             {
@@ -86,10 +100,10 @@ void split(string src)
             }
             else if (find(symbols, charToString(c)) >= 0)
             {
-                addToken(TokenType(find(symbols, charToString(c)) + 200));
+                addToken(TokenType(find(symbols, charToString(c)) + 100));
             }
         }
-        // Int
+        // Int (numbers are composed tokens)
         else if (isdigit(c))
         {
             buffer += c;
@@ -109,17 +123,11 @@ void split(string src)
     }
 };
 
-string getSource(string path)
-{
-    ifstream input(path);
-    string source;
-    string line;
-    while (getline(input, line))
-    {
-        source += line + "\n";
-    }
-    return source;
-}
+/*
+
+    COMPOSING SINGLE TOKENS INTO COMPOSED TOKENS
+
+*/
 
 vector<Token> composedTokens;
 void composeToken(TokenType type, optional<string> value = "")
@@ -129,11 +137,13 @@ void composeToken(TokenType type, optional<string> value = "")
     composed.value = value;
     composedTokens.push_back(composed);
 }
+
 void compose(vector<Token> tokens)
 {
     int l = tokens.size();
     for (int i = 0; i < l; i++)
     {
+        // some information about scanning
         TokenType token = tokens.at(i).type;
         TokenType next;
         if (i + 1 < l)
@@ -145,6 +155,8 @@ void compose(vector<Token> tokens)
             next = NONE;
         }
         string buffer;
+
+        // selecting tokens to compose
         switch (token)
         {
         case PLUS:
@@ -165,7 +177,7 @@ void compose(vector<Token> tokens)
                 composeToken(MINUS_UNARY);
                 i++;
             }
-            if (next == EQUAL)
+            else if (next == EQUAL)
             {
                 composeToken(MINUS_EQUAL);
                 i++;
@@ -246,13 +258,11 @@ int main(int argc, char *argv[])
 
     cout << "Compiling " << argv[1] << "..." << endl;
 
-    // reading the source file
     string source = getSource(argv[1]);
-    cout << source << endl;
-    // converting to simple tokens
+
     split(source);
-    // merging simple tokens to composed ones
     compose(tokens);
     showComposedTokens();
+
     return EXIT_SUCCESS;
 }
