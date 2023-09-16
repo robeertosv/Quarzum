@@ -1,2 +1,3 @@
-int a == 0;
-return 123;
+function sum(int a, int b){
+    return a + b;
+}

@@ -7,18 +7,6 @@
 
 using namespace std;
 
-string getSource(string path)
-{
-    ifstream input(path);
-    string source;
-    string line;
-    while (getline(input, line))
-    {
-        source += line + "\n";
-    }
-    return source;
-}
-
 struct Token
 {
     TokenType type;
@@ -57,6 +45,33 @@ void tokenize(string src)
         case '\n':
             line++;
             break;
+        case '(':
+            addToken(PAR_OPEN);
+            break;
+        case ')':
+            addToken(PAR_CLOSE);
+            break;
+        case '{':
+            addToken(CURLY_OPEN);
+            break;
+        case '}':
+            addToken(CURLY_CLOSE);
+            break;
+        case '[':
+            addToken(SQUARE_OPEN);
+            break;
+        case ']':
+            addToken(SQUARE_CLOSE);
+            break;
+        case '+':
+            addToken(PLUS);
+            break;
+        case '-':
+            addToken(MINUS);
+            break;
+        case ',':
+            addToken(COMMA);
+            break;
         case ';':
             addToken(SEMI);
             break;
@@ -85,17 +100,17 @@ void tokenize(string src)
                 buffer += c;
                 if (!isalpha(next))
                 {
-                    if (buffer == "return")
+                    bool isKeyword = false;
+                    for (int i = 0; i <= 9; i++)
                     {
-                        addToken(RETURN);
-                        buffer.clear();
+                        if (buffer == keywords[i])
+                        {
+                            isKeyword = true;
+                            addToken(TokenType(i));
+                            buffer.clear();
+                        }
                     }
-                    else if (buffer == "int")
-                    {
-                        addToken(INT);
-                        buffer.clear();
-                    }
-                    else
+                    if (isKeyword == false)
                     {
                         addToken(IDENTIFIER, buffer);
                         buffer.clear();
@@ -111,6 +126,7 @@ void tokenize(string src)
                     buffer.clear();
                 }
             }
+            // Undefined symbol error
             else
             {
                 cerr << "Error: undefined symbol at line " << line << ":" << endl;
@@ -134,6 +150,18 @@ void showTokens()
         }
         cout << endl;
     }
+}
+
+string getSource(string path)
+{
+    ifstream input(path);
+    string source;
+    string line;
+    while (getline(input, line))
+    {
+        source += line + "\n";
+    }
+    return source;
 }
 
 int main(int argc, char *argv[])
