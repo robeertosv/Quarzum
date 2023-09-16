@@ -2,6 +2,8 @@
 #include <fstream>
 #include <string>
 #include <vector>
+#include <optional>
+#include "tokenType.h"
 
 using namespace std;
 
@@ -9,31 +11,22 @@ string getSource(string path)
 {
     ifstream input(path);
     string source;
-    while (!input.eof())
+    string line;
+    while (getline(input, line))
     {
-        getline(input, source);
+        source += line + "\n";
     }
     return source;
 }
 
-enum TokenType
-{
-    RETURN,
-    INT,
-    INTV,
-    SEMI,
-    EQUAL,
-    IDENTIFIER
-};
-
 struct Token
 {
     TokenType type;
-    string value;
+    optional<string> value;
 };
 
 vector<Token> tokens;
-void addToken(TokenType type, string value)
+void addToken(TokenType type, optional<string> value = "")
 {
     Token t;
     t.type = type;
@@ -43,32 +36,63 @@ void addToken(TokenType type, string value)
 
 void tokenize(string src)
 {
-
     int length = src.length();
     string buffer;
     for (int i = 0; i < length; i++)
     {
+        // some information about scanning
         char c = src.at(i);
+        char next;
+        if (i + 1 < length)
+        {
+            next = src.at(i + 1);
+        }
         int line = 1;
+
+        // scanning by characters
         switch (c)
         {
+        case ' ':
+            break;
+        case '\n':
+            line++;
+            break;
         case ';':
-            addToken(SEMI, ";");
+            addToken(SEMI);
             break;
         case '=':
-            addToken(EQUAL, "=");
+            buffer += "=";
+            if (next != '=')
+            {
+                if (buffer == "=")
+                {
+                    addToken(EQUAL);
+                }
+                if (buffer == "==")
+                {
+                    addToken(IS_EQUAL);
+                }
+                if (buffer == "===")
+                {
+                    addToken(IS_EQUIVALENT);
+                }
+                buffer.clear();
+            }
             break;
         default:
             if (isalpha(c))
             {
                 buffer += c;
-                if (!isalpha(src.at(i + 1)))
+                if (!isalpha(next))
                 {
-                    cout << "Buffer: " << buffer << endl;
-
                     if (buffer == "return")
                     {
-                        addToken(RETURN, buffer);
+                        addToken(RETURN);
+                        buffer.clear();
+                    }
+                    else if (buffer == "int")
+                    {
+                        addToken(INT);
                         buffer.clear();
                     }
                     else
@@ -81,20 +105,11 @@ void tokenize(string src)
             else if (isdigit(c))
             {
                 buffer += c;
-                if (!isdigit(src.at(i + 1)))
+                if (!isdigit(next))
                 {
-                    cout << "Buffer: " << buffer << endl;
                     addToken(INTV, buffer);
                     buffer.clear();
                 }
-            }
-            else if (isspace(c))
-            {
-                if (c == '\n')
-                {
-                    line++;
-                }
-                continue;
             }
             else
             {
@@ -112,7 +127,12 @@ void showTokens()
     cout << "Tokens: " << tokens.size() << endl;
     for (int i = 0; i < tokens.size(); i++)
     {
-        cout << tokens.at(i).type << " | " << tokens.at(i).value << endl;
+        cout << toString(tokens.at(i).type);
+        if (tokens.at(i).value != "")
+        {
+            cout << " | " << tokens.at(i).value.value();
+        }
+        cout << endl;
     }
 }
 
