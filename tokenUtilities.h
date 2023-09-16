@@ -49,10 +49,16 @@ enum TokenType
     MINUS,
     COMMA,
     POINT,
+    LESS,
+    GREATER,
     // composed symbols
     EQUAL = 250,
     IS_EQUAL,
     IS_EQUIVALENT,
+    PLUS_UNARY,
+    MINUS_UNARY,
+    PLUS_EQUAL,
+    MINUS_EQUAL,
     // others
     IDENTIFIER = 300
 };
@@ -100,7 +106,7 @@ std::vector<std::string> keywords = {
 
 std::vector<std::string> symbols = {
     ";", "(", ")", "{", "}", "[", "]", "+",
-    "-", ",", "."};
+    "-", ",", ".", "<", ">"};
 
 int find(std::vector<std::string> collection, std::string object)
 {
@@ -154,6 +160,14 @@ std::string toString(TokenType tokentype)
         return "PLUS";
     case MINUS:
         return "MINUS";
+    case PLUS_UNARY:
+        return "PLUS_UNARY";
+    case MINUS_UNARY:
+        return "MINUS_UNARY";
+    case PLUS_EQUAL:
+        return "PLUS_EQUAL";
+    case MINUS_EQUAL:
+        return "MINUS_EQUAL";
     case COMMA:
         return "COMMA";
     case POINT:

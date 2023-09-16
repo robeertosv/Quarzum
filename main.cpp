@@ -44,6 +44,21 @@ void tokenize(string src)
         {
             line++;
         }
+        else if (c == '+' && next == '+')
+        {
+            addToken(PLUS_UNARY);
+            i++;
+        }
+        else if (c == '-' && next == '-')
+        {
+            addToken(MINUS_UNARY);
+            i++;
+        }
+        else if (c == '+' && next == '=')
+        {
+            addToken(PLUS_EQUAL);
+            i++;
+        }
         else if (c == '=')
         {
             buffer += "=";
