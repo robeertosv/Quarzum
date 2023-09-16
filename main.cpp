@@ -3,15 +3,9 @@
 #include <string>
 #include <vector>
 #include <optional>
-#include "tokenType.h"
+#include "tokenUtilities.h"
 
 using namespace std;
-
-struct Token
-{
-    TokenType type;
-    optional<string> value;
-};
 
 vector<Token> tokens;
 void addToken(TokenType type, optional<string> value = "")
@@ -24,6 +18,7 @@ void addToken(TokenType type, optional<string> value = "")
 
 void tokenize(string src)
 {
+
     int length = src.length();
     string buffer;
     for (int i = 0; i < length; i++)
@@ -38,44 +33,19 @@ void tokenize(string src)
         int line = 1;
 
         // scanning by characters
-        switch (c)
+        if (c == ' ')
         {
-        case ' ':
-            break;
-        case '\n':
+            if (buffer[0] == '"')
+            {
+                buffer += c;
+            }
+        }
+        else if (c == '\n')
+        {
             line++;
-            break;
-        case '(':
-            addToken(PAR_OPEN);
-            break;
-        case ')':
-            addToken(PAR_CLOSE);
-            break;
-        case '{':
-            addToken(CURLY_OPEN);
-            break;
-        case '}':
-            addToken(CURLY_CLOSE);
-            break;
-        case '[':
-            addToken(SQUARE_OPEN);
-            break;
-        case ']':
-            addToken(SQUARE_CLOSE);
-            break;
-        case '+':
-            addToken(PLUS);
-            break;
-        case '-':
-            addToken(MINUS);
-            break;
-        case ',':
-            addToken(COMMA);
-            break;
-        case ';':
-            addToken(SEMI);
-            break;
-        case '=':
+        }
+        else if (c == '=')
+        {
             buffer += "=";
             if (next != '=')
             {
@@ -93,47 +63,63 @@ void tokenize(string src)
                 }
                 buffer.clear();
             }
-            break;
-        default:
-            if (isalpha(c))
+        }
+        else if (c == '"')
+        {
+            buffer += c;
+            if (buffer[0] == '"' && buffer.length() > 1)
             {
-                buffer += c;
-                if (!isalpha(next))
-                {
-                    bool isKeyword = false;
-                    for (int i = 0; i <= 9; i++)
-                    {
-                        if (buffer == keywords[i])
-                        {
-                            isKeyword = true;
-                            addToken(TokenType(i));
-                            buffer.clear();
-                        }
-                    }
-                    if (isKeyword == false)
-                    {
-                        addToken(IDENTIFIER, buffer);
-                        buffer.clear();
-                    }
-                }
+                addToken(STRINGV, buffer);
+                buffer.clear();
             }
-            else if (isdigit(c))
+        }
+
+        // Keywords and identifiers
+        else if (isalpha(c))
+        {
+            buffer += c;
+            if (!isalpha(next) && buffer[0] != '"')
             {
-                buffer += c;
-                if (!isdigit(next))
+                if (find(keywords, buffer) >= 0)
                 {
-                    addToken(INTV, buffer);
+                    addToken(TokenType(find(keywords, buffer)));
+                    buffer.clear();
+                }
+                else
+                {
+                    addToken(IDENTIFIER, buffer);
                     buffer.clear();
                 }
             }
-            // Undefined symbol error
-            else
+        }
+        // Some punctuation symbols
+        else if (ispunct(c))
+        {
+            if (buffer[0] == '"')
             {
-                cerr << "Error: undefined symbol at line " << line << ":" << endl;
-                cerr << "-> " << src.substr(0, src.find("\n")) << endl;
-                exit(EXIT_FAILURE);
+                buffer += c;
             }
-            break;
+            else if (find(symbols, charToString(c)) >= 0)
+            {
+                addToken(TokenType(find(symbols, charToString(c)) + 200));
+            }
+        }
+        // Int
+        else if (isdigit(c))
+        {
+            buffer += c;
+            if (!isdigit(next) && buffer[0] != '"')
+            {
+                addToken(INTV, buffer);
+                buffer.clear();
+            }
+        }
+        // Undefined symbol error
+        else
+        {
+            cerr << "Error: undefined symbol at line " << line << ":" << endl;
+            cerr << "-> " << src.substr(0, src.find("\n")) << endl;
+            exit(EXIT_FAILURE);
         }
     }
 };
