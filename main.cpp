@@ -16,7 +16,7 @@ void addToken(TokenType type, optional<string> value = "")
     tokens.push_back(t);
 }
 
-void tokenize(string src)
+void split(string src)
 {
 
     int length = src.length();
@@ -33,6 +33,7 @@ void tokenize(string src)
         int line = 1;
 
         // scanning by characters
+
         if (c == ' ')
         {
             if (buffer[0] == '"')
@@ -44,40 +45,9 @@ void tokenize(string src)
         {
             line++;
         }
-        else if (c == '+' && next == '+')
-        {
-            addToken(PLUS_UNARY);
-            i++;
-        }
-        else if (c == '-' && next == '-')
-        {
-            addToken(MINUS_UNARY);
-            i++;
-        }
-        else if (c == '+' && next == '=')
-        {
-            addToken(PLUS_EQUAL);
-            i++;
-        }
         else if (c == '=')
         {
-            buffer += "=";
-            if (next != '=')
-            {
-                if (buffer == "=")
-                {
-                    addToken(EQUAL);
-                }
-                if (buffer == "==")
-                {
-                    addToken(IS_EQUAL);
-                }
-                if (buffer == "===")
-                {
-                    addToken(IS_EQUIVALENT);
-                }
-                buffer.clear();
-            }
+            addToken(EQUAL);
         }
         else if (c == '"')
         {
@@ -85,13 +55,13 @@ void tokenize(string src)
             if (buffer[0] == '"' && buffer.length() > 1)
             {
                 addToken(STRINGV, buffer);
-                buffer.clear();
             }
         }
 
         // Keywords and identifiers
         else if (isalpha(c))
         {
+
             buffer += c;
             if (!isalpha(next) && buffer[0] != '"')
             {
@@ -139,20 +109,6 @@ void tokenize(string src)
     }
 };
 
-void showTokens()
-{
-    cout << "Tokens: " << tokens.size() << endl;
-    for (int i = 0; i < tokens.size(); i++)
-    {
-        cout << toString(tokens.at(i).type);
-        if (tokens.at(i).value != "")
-        {
-            cout << " | " << tokens.at(i).value.value();
-        }
-        cout << endl;
-    }
-}
-
 string getSource(string path)
 {
     ifstream input(path);
@@ -163,6 +119,121 @@ string getSource(string path)
         source += line + "\n";
     }
     return source;
+}
+
+vector<Token> composedTokens;
+void composeToken(TokenType type, optional<string> value = "")
+{
+    Token composed;
+    composed.type = type;
+    composed.value = value;
+    composedTokens.push_back(composed);
+}
+void compose(vector<Token> tokens)
+{
+    int l = tokens.size();
+    for (int i = 0; i < l; i++)
+    {
+        TokenType token = tokens.at(i).type;
+        TokenType next;
+        if (i + 1 < l)
+        {
+            next = tokens.at(i + 1).type;
+        }
+        else
+        {
+            next = NONE;
+        }
+        string buffer;
+        switch (token)
+        {
+        case PLUS:
+            if (next == PLUS)
+            {
+                composeToken(PLUS_UNARY);
+                i++;
+            }
+            if (next == EQUAL)
+            {
+                composeToken(PLUS_EQUAL);
+                i++;
+            }
+            break;
+        case MINUS:
+            if (next == MINUS)
+            {
+                composeToken(MINUS_UNARY);
+                i++;
+            }
+            if (next == EQUAL)
+            {
+                composeToken(MINUS_EQUAL);
+                i++;
+            }
+            break;
+        case EQUAL:
+            if (next == EQUAL)
+            {
+                if (i + 2 < l && tokens.at(i + 2).type == EQUAL)
+                {
+                    composeToken(IS_EQUIVALENT);
+                    i += 2;
+                }
+                else
+                {
+                    composeToken(IS_EQUAL);
+                    i++;
+                }
+            }
+            else
+            {
+                composeToken(EQUAL);
+            }
+            break;
+        case LESS:
+            if (next == EQUAL)
+            {
+                composeToken(LESS_EQUAL);
+                i++;
+            }
+            break;
+        case GREATER:
+            if (next == EQUAL)
+            {
+                composeToken(GREATER_EQUAL);
+                i++;
+            }
+            break;
+        case INTV:
+            if (next == POINT && tokens.at(i + 2).type == INTV)
+            {
+                composeToken(NUMBERV, tokens.at(i).value.value() + "." + tokens.at(i + 2).value.value());
+                i++;
+            }
+            else
+            {
+                composeToken(INTV, tokens.at(i).value);
+            }
+            break;
+        default:
+            composeToken(token, tokens.at(i).value);
+            break;
+        }
+    }
+}
+void showComposedTokens()
+{
+    cout << endl
+         << "Composed Tokens: " << composedTokens.size() << endl;
+    for (int i = 0; i < composedTokens.size(); i++)
+    {
+        cout << toString(composedTokens.at(i).type);
+        if (composedTokens.at(i).value != "")
+        {
+            cout << " | " << composedTokens.at(i).value.value();
+        }
+        cout << endl;
+    }
 }
 
 int main(int argc, char *argv[])
@@ -178,9 +249,10 @@ int main(int argc, char *argv[])
     // reading the source file
     string source = getSource(argv[1]);
     cout << source << endl;
-    // converting to tokens
-    tokenize(source);
-    showTokens();
-
+    // converting to simple tokens
+    split(source);
+    // merging simple tokens to composed ones
+    compose(tokens);
+    showComposedTokens();
     return EXIT_SUCCESS;
 }

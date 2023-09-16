@@ -37,6 +37,7 @@ enum TokenType
     // values
     INTV = 100,
     STRINGV = 101,
+    NUMBERV = 102,
     // symbols
     SEMI = 200,
     PAR_OPEN,
@@ -59,8 +60,11 @@ enum TokenType
     MINUS_UNARY,
     PLUS_EQUAL,
     MINUS_EQUAL,
+    LESS_EQUAL,
+    GREATER_EQUAL,
     // others
-    IDENTIFIER = 300
+    IDENTIFIER = 300,
+    NONE = 301
 };
 
 struct Token
@@ -140,6 +144,8 @@ std::string toString(TokenType tokentype)
         return "SEMICOLON";
     case INTV:
         return "INT_VALUE";
+    case NUMBERV:
+        return "NUMBER_VALUE";
     case STRINGV:
         return "STRING_VALUE";
     case EQUAL:
@@ -168,12 +174,18 @@ std::string toString(TokenType tokentype)
         return "PLUS_EQUAL";
     case MINUS_EQUAL:
         return "MINUS_EQUAL";
+    case LESS_EQUAL:
+        return "LESS_EQUAL";
+    case GREATER_EQUAL:
+        return "GREATER_EQUAL";
     case COMMA:
         return "COMMA";
     case POINT:
         return "POINT";
     case IDENTIFIER:
         return "IDENTIFIER";
+    case NONE:
+        break;
     default:
         return "Unknown token name";
     }

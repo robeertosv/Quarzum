@@ -1,5 +1,5 @@
 echo off
 g++ main.cpp -o main.exe
-main.exe math.ne
+main.exe code2.ne
 del main.exe
 exit
