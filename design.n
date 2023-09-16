@@ -1,0 +1,49 @@
+module Program {
+    int i = 2;
+    i++;
+    i = console.in();
+    if(i == 3){
+        console.out("It's three!");
+    }
+    else{
+        while(i < 3){
+            i++;
+        }
+        console.out("Now it's three!");
+    }
+
+    function sayHi{
+        console.out("Hi!");
+    }
+    bool itsThree{
+        return i==3;
+    }
+}
+
+------------
+
+TOKENS
+
+------------
+
+MODULE IDENTIFIER CURLY_OPEN
+    INT IDENTIFIER EQUAL INTV SEMI
+    IDENTIFIER UNARY_PLUS SEMI
+    IDENTIFIER EQUAL IDENTIFIER POINT IDENTIFIER PAR_OPEN PAR_CLOSE SEMI
+    IF PAR_OPEN IDENTIFIER IS_EQUAL INTV PAR_CLOSE CURLY_OPEN
+        IDENTIFIER POINT IDENTIFIER PAR_OPEN STRINGV PAR_CLOSE SEMI
+    CURLY_CLOSE
+    ELSE CURLY_OPEN
+        WHILE PAR_OPEN IDENTIFIER IS_LOWER INTV PAR_CLOSE CURLY_OPEN
+            IDENTIFIER UNARY_PLUS SEMI
+        CURLY_CLOSE
+        IDENTIFIER POINT IDENTIFIER PAR_OPEN STRINGV PAR_CLOSE SEMI
+    CURLY_CLOSE
+
+    FUNCTION IDENTIFIER PAR_OPEN PAR_CLOSE CURLY_OPEN
+        IDENTIFIER POINT IDENTIFIER PAR_OPEN STRINGV PAR_CLOSE SEMI
+    CURLY_CLOSE
+    BOOL IDENTIFIER CURLY_OPEN
+        RETURN IDENTIFIER IS_EQUAL INTV SEMI
+    CURLY_CLOSE
+CURLY_CLOSE
