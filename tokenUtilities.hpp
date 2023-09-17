@@ -58,7 +58,9 @@ enum TokenType
     POINT,
     LESS,
     GREATER,
+    NOT_SYMBOL,
     EQUAL,
+
     // composed symbols
 
     IS_EQUAL = 250,
@@ -68,6 +70,10 @@ enum TokenType
     MINUS_EQUAL,
     LESS_EQUAL,
     GREATER_EQUAL,
+    NOT_EQUAL,
+    PRODUCT_EQUAL,
+    DIVIDE_EQUAL,
+    DMODULE_EQUAL,
     // others
     IDENTIFIER = 300,
     NONE = 301
@@ -116,7 +122,8 @@ std::vector<std::string> keywords = {
 
 std::vector<std::string> symbols = {
     ";", "(", ")", "{", "}", "[", "]", "+",
-    "-", ",", ".", "<", ">", "="};
+    "-", "*", "/", "%", "^", ",", ".", "<",
+    ">", "!", "="};
 
 int find(std::vector<std::string> collection, std::string object)
 {
