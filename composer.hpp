@@ -1,7 +1,5 @@
 #pragma once
-#include <vector>
-#include <optional>
-#include <string>
+
 using namespace std;
 
 class Composer
@@ -15,8 +13,6 @@ public:
     vector<Token> compose()
     {
         l = list.size();
-        cout << "Composing..." << endl
-             << "------------" << endl;
         i = 0;
         while (i < l)
         {

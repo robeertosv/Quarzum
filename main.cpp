@@ -4,8 +4,10 @@
 #include <vector>
 #include <optional>
 #include "tokenUtilities.hpp"
+#include "nodeUtilities.hpp"
 #include "splitter.hpp"
 #include "composer.hpp"
+#include "parser.hpp"
 
 using namespace std;
 string getSource(string path)
@@ -19,7 +21,15 @@ string getSource(string path)
     }
     return source;
 }
-
+void debug(vector<Token> composed)
+{
+    for (int i = 0; i < composed.size(); i++)
+    {
+        cout << composed.at(i).type;
+        cout << " | ";
+        cout << composed.at(i).value.value() << endl;
+    }
+}
 int main(int argc, char *argv[])
 {
     if (argc < 2)
@@ -35,21 +45,15 @@ int main(int argc, char *argv[])
 
     Splitter splitter(source);
     vector<Token> tokens = splitter.split();
-    for (int i = 0; i < tokens.size(); i++)
-    {
-        cout << tokens.at(i).type;
-        cout << " | ";
-        cout << tokens.at(i).value.value() << endl;
-    }
 
     Composer composer(tokens);
     vector<Token> composed = composer.compose();
 
-    for (int i = 0; i < composed.size(); i++)
-    {
-        cout << composed.at(i).type;
-        cout << " | ";
-        cout << composed.at(i).value.value() << endl;
-    }
+    // debug(composed);
+    Parser parser(composed);
+    optional<ReturnNode> node = parser.parse();
+
+    cout << "Operation finished. Success!" << endl
+         << endl;
     return EXIT_SUCCESS;
 }
