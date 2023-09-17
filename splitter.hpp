@@ -89,7 +89,6 @@ public:
                 exit(EXIT_FAILURE);
             }
         }
-        cout << "Splitting procedure finished." << endl;
         return tokens;
     }
 

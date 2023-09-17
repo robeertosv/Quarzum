@@ -45,23 +45,24 @@ public:
             Token token = tokens.at(i);
             switch (token.type)
             {
-            case EXIT:
-                // If there is an exit node with value...
-                if (auto exitNode = exit_node())
+            case INT:
+                if (next(2).type == EQUAL && next(4).type == SEMI)
                 {
-                    optional<ExitNode> node = exit_node();
-                    result.exitNodes.push_back(node.value());
+                    result.nodes.push_back(StatementNode{
+                        IntAssignment{
+                            next(), next(3)}});
 
-                    cout << result.exitNodes.size() << " | EXIT NODE - Code " << result.exitNodes.at(result.exitNodes.size() - 1).exitCode.token.value.value() << endl;
-
-                    i += 3; // Increment by the size in tokens of the node
+                    cout << "Int assign: " << result.nodes.at(result.nodes.size() - 1).statement.value.value.value() << " -> " << result.nodes.at(result.nodes.size() - 1).statement.identifier.value.value() << endl;
+                    i += 4;
                 }
                 else
                 {
                     abort();
                 }
+
                 break;
             }
+            i++;
         }
         cout << "Parsing procedure finished." << endl;
         return result;

@@ -12,8 +12,10 @@ public:
     string generate()
     {
         string result;
-        cout << "Generating procedure finished." << endl;
-        return "";
+        result += "global _start\n_start:\n     mov rax, 60\n     mov rdi, 100\n     syscall";
+        cout
+            << "Generating procedure finished." << endl;
+        return result;
     }
 
 private:

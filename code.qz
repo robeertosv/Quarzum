@@ -1,2 +1,2 @@
-exit 34;
-exit 24;
+int a = 12;
+number b = 2.2;

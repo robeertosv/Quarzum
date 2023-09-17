@@ -53,10 +53,12 @@ int main(int argc, char *argv[])
     Parser parser(composed);
     SyntaxTree nodes = parser.parse();
 
-    Generator generator(nodes);
-    string assembly = generator.generate();
+    // Generator generator(nodes);
+    // string assembly = generator.generate();
 
     cout << "Operation finished. Success!" << endl
          << endl;
+
+    // cout << assembly;
     return EXIT_SUCCESS;
 }
