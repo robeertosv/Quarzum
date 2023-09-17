@@ -36,6 +36,10 @@ enum TokenType
     STRUCT,
     PUBLIC,
     PRIVATE,
+    ASYNC,
+    AWAIT,
+    TRUE,
+    FALSE,
     // values
     INTV = 100,
     STRINGV,
@@ -75,8 +79,7 @@ enum TokenType
     DIVIDE_EQUAL,
     DMODULE_EQUAL,
     // others
-    IDENTIFIER = 300,
-    NONE = 301
+    IDENTIFIER = 300
 };
 
 struct Token
@@ -118,7 +121,12 @@ std::vector<std::string> keywords = {
     "class",
     "struct",
     "public",
-    "private"};
+    "private",
+    "async",
+    "await",
+    "true",
+    "false"
+    };
 
 std::vector<std::string> symbols = {
     ";", "(", ")", "{", "}", "[", "]", "+",
