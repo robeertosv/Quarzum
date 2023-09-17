@@ -15,7 +15,8 @@ public:
     vector<Token> compose()
     {
         l = list.size();
-        cout << "Composing..." << endl;
+        cout << "Composing..." << endl
+             << "------------" << endl;
         i = 0;
         while (i < l)
         {
@@ -23,51 +24,61 @@ public:
             switch (token.type)
             {
             case PLUS:
-                composeIf(PLUS, PLUS_UNARY);
-                composeIf(EQUAL, PLUS_EQUAL);
+                if (next().type == PLUS)
+                {
+                    composeToken(PLUS_UNARY);
+                    i++;
+                }
+                else if (next().type == EQUAL)
+                {
+                    composeToken(PLUS_EQUAL);
+                    i++;
+                }
+                else
+                {
+                    composeToken(PLUS);
+                }
                 break;
             case MINUS:
-                composeIf(MINUS, MINUS_UNARY);
-                composeIf(EQUAL, MINUS_EQUAL);
+                if (next().type == MINUS)
+                {
+                    composeToken(MINUS_UNARY);
+                    i++;
+                }
+                else if (next().type == EQUAL)
+                {
+                    composeToken(MINUS_EQUAL);
+                    i++;
+                }
+                else
+                {
+                    composeToken(MINUS);
+                }
                 break;
-            case LESS:
-                composeIf(EQUAL, LESS_EQUAL);
+            case EQUAL:
+                if (next().type == EQUAL)
+                {
+                    composeToken(IS_EQUAL);
+                    i++;
+                }
+                else
+                {
+                    composeToken(MINUS);
+                }
                 break;
-            case GREATER:
-                composeIf(EQUAL, GREATER_EQUAL);
+            case INTV:
+                if (next().type == POINT && next(2).type == INTV)
+                {
+                    composeToken(NUMBERV, token.value.value() + "." + next(2).value.value());
+                    i += 2;
+                }
+                else
+                {
+                    composeToken(INTV, token.value.value());
+                }
                 break;
-            // case EQUAL:
-            //     if (i + 1 < l && list.at(i + 1) == EQUAL)
-            //     {
-            //         if (i + 2 < l && list.at(i + 2).type == EQUAL)
-            //         {
-            //             composeToken(IS_EQUIVALENT);
-            //             i += 2;
-            //         }
-            //         else
-            //         {
-            //             composeToken(IS_EQUAL);
-            //             i++;
-            //         }
-            //     }
-            //     else
-            //     {
-            //         composeToken(EQUAL);
-            //     }
-            //     break;
-
-            // case INTV:
-            //     if (i + 2 < l && list.at(i + 1) == POINT && list.at(i + 2).type == INTV)
-            //     {
-            //         composeToken(NUMBERV, list.at(i).value.value() + "." + list.at(i + 2).value.value());
-            //         i++;
-            //     }
-            //     else
-            //     {
-            //         composeToken(INTV, list.at(i).value);
-            //     }
-            //     break;
             default:
+                // Add the single token if is not combinable
                 composeToken(token.type, token.value);
                 break;
             }
@@ -81,20 +92,19 @@ private:
     vector<Token> composedList;
     int l, i;
     Token token;
-
+    Token next(int distance = 1)
+    {
+        if (i + distance < l)
+        {
+            return list.at(i + distance);
+        }
+        return {};
+    }
     void composeToken(TokenType type, optional<string> value = "")
     {
         Token composed;
         composed.type = type;
         composed.value = value;
         composedList.push_back(composed);
-    }
-    void composeIf(TokenType nextState, TokenType response)
-    {
-        if (i + 1 < l && list.at(i + 1).type == nextState)
-        {
-            composeToken(response);
-        }
-        i++;
     }
 };

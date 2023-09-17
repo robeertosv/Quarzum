@@ -16,7 +16,8 @@ public:
     {
         int l = data.length();
         line = 0;
-        cout << "Splitting..." << endl;
+        cout << "Splitting..." << endl
+             << "------------" << endl;
         for (int i = 0; i < l; i++)
         {
             char c = data.at(i);

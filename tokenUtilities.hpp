@@ -54,10 +54,10 @@ enum TokenType
     POINT,
     LESS,
     GREATER,
+    EQUAL,
     // composed symbols
-    EQUAL = 250,
-    IS_EQUAL,
-    IS_EQUIVALENT,
+
+    IS_EQUAL = 250,
     PLUS_UNARY,
     MINUS_UNARY,
     PLUS_EQUAL,
@@ -112,7 +112,7 @@ std::vector<std::string> keywords = {
 
 std::vector<std::string> symbols = {
     ";", "(", ")", "{", "}", "[", "]", "+",
-    "-", ",", ".", "<", ">"};
+    "-", ",", ".", "<", ">", "="};
 
 int find(std::vector<std::string> collection, std::string object)
 {
@@ -132,63 +132,4 @@ std::string charToString(char c)
     std::string s;
     s += c;
     return s;
-}
-
-std::string toString(TokenType tokentype)
-{
-    if (tokentype < 100)
-    {
-        return keywords[tokentype];
-    }
-    switch (tokentype)
-    {
-    case SEMI:
-        return "SEMICOLON";
-    case INTV:
-        return "INT_VALUE";
-    case NUMBERV:
-        return "NUMBER_VALUE";
-    case STRINGV:
-        return "STRING_VALUE";
-    case EQUAL:
-        return "EQUAL";
-    case IS_EQUAL:
-        return "IS_EQUAL";
-    case IS_EQUIVALENT:
-        return "IS_EQUIVALENT";
-    case PAR_OPEN:
-        return "PAR_OPEN";
-    case PAR_CLOSE:
-        return "PAR_CLOSE";
-    case CURLY_OPEN:
-        return "CURLY_OPEN";
-    case CURLY_CLOSE:
-        return "CURLY_CLOSE";
-    case PLUS:
-        return "PLUS";
-    case MINUS:
-        return "MINUS";
-    case PLUS_UNARY:
-        return "PLUS_UNARY";
-    case MINUS_UNARY:
-        return "MINUS_UNARY";
-    case PLUS_EQUAL:
-        return "PLUS_EQUAL";
-    case MINUS_EQUAL:
-        return "MINUS_EQUAL";
-    case LESS_EQUAL:
-        return "LESS_EQUAL";
-    case GREATER_EQUAL:
-        return "GREATER_EQUAL";
-    case COMMA:
-        return "COMMA";
-    case POINT:
-        return "POINT";
-    case IDENTIFIER:
-        return "IDENTIFIER";
-    case NONE:
-        break;
-    default:
-        return "Unknown token name";
-    }
 }

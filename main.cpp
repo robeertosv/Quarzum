@@ -28,7 +28,8 @@ int main(int argc, char *argv[])
         return EXIT_FAILURE;
     }
 
-    cout << "Compiling " << argv[1] << "..." << endl;
+    cout << "Compiling " << argv[1] << "..." << endl
+         << "------------" << endl;
 
     string source = getSource(argv[1]);
 
