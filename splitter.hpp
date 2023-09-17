@@ -29,11 +29,24 @@ public:
             // Token search
             if (c == ' ')
             {
-                storeIfQuoted(c);
+                storeIfException(c);
             }
             else if (c == '\n')
             {
                 line++;
+                if (buffer[0] == '/' && buffer[1] == '/')
+                {
+                    buffer.clear();
+                }
+            }
+            else if (c == '*' && next == '/' && buffer[0] == '/' && buffer[1] == '/')
+            {
+                buffer.clear();
+            }
+            else if (c == '/' && (next == '/' || next == '*'))
+            {
+                buffer += c;
+                buffer += next;
             }
             else if (c == '"')
             {
@@ -46,7 +59,7 @@ public:
             else if (isalpha(c))
             {
                 buffer += c;
-                if (!isalpha(next) && isNotQuoted())
+                if (!isalpha(next) && isNotException())
                 {
                     if (find(keywords, buffer) >= 0)
                     {
@@ -60,8 +73,8 @@ public:
             }
             else if (ispunct(c))
             {
-                storeIfQuoted(c);
-                if (find(symbols, charToString(c)) >= 0 && isNotQuoted())
+                storeIfException(c);
+                if (find(symbols, charToString(c)) >= 0 && isNotException())
                 {
                     addToken(TokenType(find(symbols, charToString(c)) + 200));
                 }
@@ -69,7 +82,7 @@ public:
             else if (isdigit(c))
             {
                 buffer += c;
-                if (!isdigit(next) && isNotQuoted())
+                if (!isdigit(next) && isNotException())
                 {
                     addToken(INTV, buffer);
                 }
@@ -98,15 +111,15 @@ private:
         tokens.push_back(t);
         buffer.clear();
     }
-    void storeIfQuoted(char value)
+    void storeIfException(char value)
     {
-        if (buffer[0] == '"')
+        if (buffer[0] == '"' || buffer[0] == '/')
         {
             buffer += value;
         }
     }
-    bool isNotQuoted()
+    bool isNotException()
     {
-        return buffer[0] != '"';
+        return buffer[0] != '"' && buffer[0] != '/';
     }
 };
