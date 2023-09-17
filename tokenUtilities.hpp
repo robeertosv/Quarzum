@@ -3,7 +3,8 @@
 enum TokenType
 {
     // keywords
-    RETURN = 0,
+    EXIT = 0,
+    RETURN,
     INT,
     NUMBER,
     STRING,
@@ -89,6 +90,7 @@ struct Token
 };
 
 std::vector<std::string> keywords = {
+    "exit",
     "return",
     "int",
     "number",
@@ -125,8 +127,7 @@ std::vector<std::string> keywords = {
     "async",
     "await",
     "true",
-    "false"
-    };
+    "false"};
 
 std::vector<std::string> symbols = {
     ";", "(", ")", "{", "}", "[", "]", "+",

@@ -8,6 +8,7 @@
 #include "splitter.hpp"
 #include "composer.hpp"
 #include "parser.hpp"
+#include "generator.hpp"
 
 using namespace std;
 string getSource(string path)
@@ -49,9 +50,11 @@ int main(int argc, char *argv[])
     Composer composer(tokens);
     vector<Token> composed = composer.compose();
 
-    // debug(composed);
     Parser parser(composed);
-    optional<ReturnNode> node = parser.parse();
+    SyntaxTree nodes = parser.parse();
+
+    Generator generator(nodes);
+    string assembly = generator.generate();
 
     cout << "Operation finished. Success!" << endl
          << endl;

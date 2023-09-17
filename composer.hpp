@@ -90,6 +90,7 @@ public:
             }
             i++;
         }
+        cout << "Composing procedure finished." << endl;
         return composedList;
     }
 
