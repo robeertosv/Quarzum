@@ -1,16 +1,11 @@
 #pragma once
-
+using namespace std;
 enum TokenType
 {
     // keywords
     EXIT = 0,
     RETURN,
-    INT,
-    NUMBER,
-    STRING,
-    BOOL,
-    VAR,
-    FUNCTION,
+    DATATYPE,
     CONST,
     UNDEFINED,
     NULLV,
@@ -27,7 +22,6 @@ enum TokenType
     CASE,
     IN,
     MODULE,
-    COMPLEX,
     NOT,
     AND,
     OR,
@@ -86,18 +80,12 @@ enum TokenType
 struct Token
 {
     TokenType type;
-    std::optional<std::string> value;
+    optional<string> value;
 };
 
-std::vector<std::string> keywords = {
+vector<string> keywords = {
     "exit",
     "return",
-    "int",
-    "number",
-    "string",
-    "bool",
-    "var",
-    "function",
     "const",
     "undefined",
     "null",
@@ -114,7 +102,6 @@ std::vector<std::string> keywords = {
     "case",
     "in",
     "module",
-    "complex",
     "not",
     "and",
     "or",
@@ -129,12 +116,21 @@ std::vector<std::string> keywords = {
     "true",
     "false"};
 
-std::vector<std::string> symbols = {
+vector<string> data_types = {
+    "int",
+    "number",
+    "string",
+    "bool",
+    "var",
+    "function",
+    "complex"};
+
+vector<string> symbols = {
     ";", "(", ")", "{", "}", "[", "]", "+",
     "-", "*", "/", "%", "^", ",", ".", "<",
     ">", "!", "="};
 
-int find(std::vector<std::string> collection, std::string object)
+int find(vector<string> collection, string object)
 {
     int l = collection.size();
     for (int i = 0; i < l; i++)
@@ -147,9 +143,9 @@ int find(std::vector<std::string> collection, std::string object)
     return -1;
 }
 
-std::string charToString(char c)
+string charToString(char c)
 {
-    std::string s;
+    string s;
     s += c;
     return s;
 }

@@ -96,9 +96,9 @@ public:
 private:
     vector<Token> list;
     vector<Token> composedList;
-    int l, i;
+    unsigned int l, i;
     Token token;
-    Token next(int distance = 1)
+    Token next(short int distance = 1)
     {
         if (i + distance < l)
         {

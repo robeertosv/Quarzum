@@ -50,7 +50,11 @@ int main(int argc, char *argv[])
 
     Splitter splitter(source);
     vector<Token> tokens = splitter.split();
-
+    for (int i = 0; i < tokens.size(); i++)
+    {
+        cout << tokens.at(i).type << " | " << tokens.at(i).value.value() << endl
+             << endl;
+    }
     clock_t split_t = clock();
     cout << "Split phase finished in " << (double)(split_t - begin) / CLOCKS_PER_SEC << " seconds.\n";
 
@@ -61,8 +65,9 @@ int main(int argc, char *argv[])
 
     clock_t end = clock();
     exec_time += (double)(end - begin) / CLOCKS_PER_SEC;
-    // Parser parser(composed);
-    // SyntaxTree nodes = parser.parse();
+
+    Parser parser(composed);
+    SyntaxTree nodes = parser.parse();
 
     // Generator generator(nodes);
     // string assembly = generator.generate();

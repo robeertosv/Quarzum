@@ -10,9 +10,9 @@ public:
     }
     vector<Token> split()
     {
-        int l = data.length();
+        unsigned int l = data.length();
         line = 0;
-        for (int i = 0; i < l; i++)
+        for (unsigned int i = 0; i < l; i++)
         {
             char c = data.at(i);
             char next;
@@ -55,7 +55,11 @@ public:
                 buffer += c;
                 if (!isalpha(next) && isNotException())
                 {
-                    if (find(keywords, buffer) >= 0)
+                    if (find(data_types, buffer) >= 0)
+                    {
+                        addToken(DATATYPE, buffer);
+                    }
+                    else if (find(keywords, buffer) >= 0)
                     {
                         addToken(TokenType(find(keywords, buffer)));
                     }
@@ -95,7 +99,7 @@ public:
 private:
     vector<Token> tokens;
     string data, buffer;
-    int line;
+    unsigned int line;
 
     void addToken(TokenType type, optional<string> value = "")
     {
