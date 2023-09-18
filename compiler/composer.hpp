@@ -28,49 +28,50 @@ public:
             case GREATER:
                 composeIf(GREATER, EQUAL, GREATER_EQUAL);
                 break;
-            case PRODUCT:
-                composeIf(PRODUCT, EQUAL, PRODUCT_EQUAL);
-                break;
-            case DIVIDE:
-                composeIf(DIVIDE, EQUAL, DIVIDE_EQUAL);
-                break;
-            case DMODULE:
-                composeIf(DMODULE, EQUAL, DMODULE_EQUAL);
+            case OPERATOR:
+                if (token.value.value() == "*")
+                {
+                    composeIf(OPERATOR, EQUAL, PRODUCT_EQUAL, token.value.value());
+                }
+                else if (token.value.value() == "/")
+                {
+                    composeIf(OPERATOR, EQUAL, DIVIDE_EQUAL, token.value.value());
+                }
+                else if (token.value.value() == "+")
+                {
+                    if (next().value.value() == "+")
+                    {
+                        composeToken(PLUS_UNARY);
+                        i++;
+                    }
+                    else
+                    {
+                        composeIf(OPERATOR, EQUAL, PLUS_EQUAL, token.value.value());
+                    }
+                }
+                else if (token.value.value() == "-")
+                {
+                    if (next().value.value() == "-")
+                    {
+                        composeToken(MINUS_UNARY);
+                        i++;
+                    }
+                    else
+                    {
+                        composeIf(OPERATOR, EQUAL, MINUS_EQUAL, token.value.value());
+                    }
+                }
+                else if (token.value.value() == "%")
+                {
+                    composeIf(OPERATOR, EQUAL, DMODULE_EQUAL, token.value.value());
+                }
+                else if (token.value.value() == "^")
+                {
+                    composeIf(OPERATOR, EQUAL, POWER_EQUAL, token.value.value());
+                }
                 break;
             case EQUAL:
                 composeIf(EQUAL, EQUAL, IS_EQUAL);
-                break;
-            case PLUS:
-                if (next().type == PLUS)
-                {
-                    composeToken(PLUS_UNARY);
-                    i++;
-                }
-                else if (next().type == EQUAL)
-                {
-                    composeToken(PLUS_EQUAL);
-                    i++;
-                }
-                else
-                {
-                    composeToken(PLUS);
-                }
-                break;
-            case MINUS:
-                if (next().type == MINUS)
-                {
-                    composeToken(MINUS_UNARY);
-                    i++;
-                }
-                else if (next().type == EQUAL)
-                {
-                    composeToken(MINUS_EQUAL);
-                    i++;
-                }
-                else
-                {
-                    composeToken(MINUS);
-                }
                 break;
             case INTV:
                 if (next().type == POINT && next(2).type == INTV)
@@ -113,7 +114,7 @@ private:
         composed.value = value;
         composedList.push_back(composed);
     }
-    void composeIf(TokenType def, TokenType nextType, TokenType result)
+    void composeIf(TokenType def, TokenType nextType, TokenType result, optional<string> value = "")
     {
         if (next().type == nextType)
         {
@@ -122,7 +123,7 @@ private:
         }
         else
         {
-            composeToken(def);
+            composeToken(def, value);
         }
     }
 };

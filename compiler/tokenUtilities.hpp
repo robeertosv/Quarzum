@@ -47,12 +47,7 @@ enum TokenType
     CURLY_CLOSE,
     SQUARE_OPEN,
     SQUARE_CLOSE,
-    PLUS,
-    MINUS,
-    PRODUCT,
-    DIVIDE,
-    DMODULE,
-    POWER,
+    OPERATOR,
     COMMA,
     POINT,
     LESS,
@@ -73,6 +68,7 @@ enum TokenType
     PRODUCT_EQUAL,
     DIVIDE_EQUAL,
     DMODULE_EQUAL,
+    POWER_EQUAL,
     // others
     IDENTIFIER = 300
 };
@@ -126,9 +122,11 @@ vector<string> data_types = {
     "complex"};
 
 vector<string> symbols = {
-    ";", "(", ")", "{", "}", "[", "]", "+",
-    "-", "*", "/", "%", "^", ",", ".", "<",
+    ";", "(", ")", "{", "}", "[", "]", ",", ".", "<",
     ">", "!", "="};
+
+vector<string> operators = {
+    "+", "-", "*", "/", "%", "^"};
 
 int find(vector<string> collection, string object)
 {

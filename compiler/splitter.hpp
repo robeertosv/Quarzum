@@ -72,9 +72,16 @@ public:
             else if (ispunct(c))
             {
                 storeIfException(c);
-                if (find(symbols, charToString(c)) >= 0 && isNotException())
+                if (isNotException())
                 {
-                    addToken(TokenType(find(symbols, charToString(c)) + 200));
+                    if (find(symbols, charToString(c)) >= 0)
+                    {
+                        addToken(TokenType(find(symbols, charToString(c)) + 200));
+                    }
+                    else if (find(operators, charToString(c)) >= 0)
+                    {
+                        addToken(OPERATOR, charToString(c));
+                    }
                 }
             }
             else if (isdigit(c))
