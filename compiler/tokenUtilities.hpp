@@ -5,7 +5,13 @@ enum TokenType
     // keywords
     EXIT = 0,
     RETURN,
-    DATATYPE,
+    INT,
+    NUMBER,
+    STRING,
+    BOOL,
+    VAR,
+    FUNCTION,
+    COMPLEX,
     CONST,
     UNDEFINED,
     NULLV,
@@ -47,7 +53,12 @@ enum TokenType
     CURLY_CLOSE,
     SQUARE_OPEN,
     SQUARE_CLOSE,
-    OPERATOR,
+    PLUS,
+    MINUS,
+    PRODUCT,
+    DIVIDE,
+    DMODULE,
+    POWER,
     COMMA,
     POINT,
     LESS,
@@ -82,6 +93,13 @@ struct Token
 vector<string> keywords = {
     "exit",
     "return",
+    "int",
+    "number",
+    "string",
+    "bool",
+    "var",
+    "function",
+    "complex",
     "const",
     "undefined",
     "null",
@@ -112,21 +130,9 @@ vector<string> keywords = {
     "true",
     "false"};
 
-vector<string> data_types = {
-    "int",
-    "number",
-    "string",
-    "bool",
-    "var",
-    "function",
-    "complex"};
-
 vector<string> symbols = {
-    ";", "(", ")", "{", "}", "[", "]", ",", ".", "<",
+    ";", "(", ")", "{", "}", "[", "]", "+", "-", "*", "/", "%", "^", ",", ".", "<",
     ">", "!", "="};
-
-vector<string> operators = {
-    "+", "-", "*", "/", "%", "^"};
 
 int find(vector<string> collection, string object)
 {

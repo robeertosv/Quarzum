@@ -55,11 +55,7 @@ public:
                 buffer += c;
                 if (!isalpha(next) && isNotException())
                 {
-                    if (find(data_types, buffer) >= 0)
-                    {
-                        addToken(DATATYPE, buffer);
-                    }
-                    else if (find(keywords, buffer) >= 0)
+                    if (find(keywords, buffer) >= 0)
                     {
                         addToken(TokenType(find(keywords, buffer)));
                     }
@@ -77,10 +73,6 @@ public:
                     if (find(symbols, charToString(c)) >= 0)
                     {
                         addToken(TokenType(find(symbols, charToString(c)) + 200));
-                    }
-                    else if (find(operators, charToString(c)) >= 0)
-                    {
-                        addToken(OPERATOR, charToString(c));
                     }
                 }
             }

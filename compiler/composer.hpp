@@ -28,47 +28,39 @@ public:
             case GREATER:
                 composeIf(GREATER, EQUAL, GREATER_EQUAL);
                 break;
-            case OPERATOR:
-                if (token.value.value() == "*")
+            case PLUS:
+                if (next().type == PLUS)
                 {
-                    composeIf(OPERATOR, EQUAL, PRODUCT_EQUAL, token.value.value());
+                    composeToken(PLUS_UNARY);
+                    i++;
                 }
-                else if (token.value.value() == "/")
+                else
                 {
-                    composeIf(OPERATOR, EQUAL, DIVIDE_EQUAL, token.value.value());
+                    composeIf(PLUS, EQUAL, PLUS_EQUAL);
                 }
-                else if (token.value.value() == "+")
+                break;
+            case MINUS:
+                if (next().type == MINUS)
                 {
-                    if (next().value.value() == "+")
-                    {
-                        composeToken(PLUS_UNARY);
-                        i++;
-                    }
-                    else
-                    {
-                        composeIf(OPERATOR, EQUAL, PLUS_EQUAL, token.value.value());
-                    }
+                    composeToken(MINUS_UNARY);
+                    i++;
                 }
-                else if (token.value.value() == "-")
+                else
                 {
-                    if (next().value.value() == "-")
-                    {
-                        composeToken(MINUS_UNARY);
-                        i++;
-                    }
-                    else
-                    {
-                        composeIf(OPERATOR, EQUAL, MINUS_EQUAL, token.value.value());
-                    }
+                    composeIf(MINUS, EQUAL, MINUS_EQUAL);
                 }
-                else if (token.value.value() == "%")
-                {
-                    composeIf(OPERATOR, EQUAL, DMODULE_EQUAL, token.value.value());
-                }
-                else if (token.value.value() == "^")
-                {
-                    composeIf(OPERATOR, EQUAL, POWER_EQUAL, token.value.value());
-                }
+                break;
+            case PRODUCT:
+                composeIf(PRODUCT, EQUAL, PRODUCT_EQUAL);
+                break;
+            case DIVIDE:
+                composeIf(DIVIDE, EQUAL, DIVIDE_EQUAL);
+                break;
+            case DMODULE:
+                composeIf(DMODULE, EQUAL, DMODULE_EQUAL);
+                break;
+            case POWER:
+                composeIf(POWER, EQUAL, POWER_EQUAL);
                 break;
             case EQUAL:
                 composeIf(EQUAL, EQUAL, IS_EQUAL);
@@ -107,7 +99,7 @@ private:
         }
         return {};
     }
-    void composeToken(TokenType type, optional<string> value = "")
+    void composeToken(TokenType type)
     {
         Token composed;
         composed.type = type;
