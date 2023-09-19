@@ -4,7 +4,7 @@
 #include <variant>
 using namespace std;
 
-struct IntAssignment
+struct Assignment
 {
     Token identifier;
     Token value;
@@ -12,7 +12,7 @@ struct IntAssignment
 // Basic node that contains instructions by itself
 struct StatementNode
 {
-    IntAssignment statement;
+    Assignment statement;
 };
 
 // Universal container, contains every node

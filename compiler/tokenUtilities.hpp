@@ -41,6 +41,7 @@ enum TokenType
     AWAIT,
     TRUE,
     FALSE,
+    UNSIGNED,
     // values
     INTV = 100,
     STRINGV,
@@ -128,7 +129,8 @@ vector<string> keywords = {
     "async",
     "await",
     "true",
-    "false"};
+    "false",
+    "unsigned"};
 
 vector<string> symbols = {
     ";", "(", ")", "{", "}", "[", "]", "+", "-", "*", "/", "%", "^", ",", ".", "<",

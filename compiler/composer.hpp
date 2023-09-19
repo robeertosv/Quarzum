@@ -99,14 +99,14 @@ private:
         }
         return {};
     }
-    void composeToken(TokenType type)
+    void composeToken(TokenType type, optional<string> value = "")
     {
         Token composed;
         composed.type = type;
         composed.value = value;
         composedList.push_back(composed);
     }
-    void composeIf(TokenType def, TokenType nextType, TokenType result, optional<string> value = "")
+    void composeIf(TokenType def, TokenType nextType, TokenType result)
     {
         if (next().type == nextType)
         {
@@ -115,7 +115,7 @@ private:
         }
         else
         {
-            composeToken(def, value);
+            composeToken(def);
         }
     }
 };
