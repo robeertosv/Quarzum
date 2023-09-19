@@ -17,42 +17,12 @@ public:
         while (i < l)
         {
             Token token = tokens.at(i);
-            switch (token.type)
+
+            if (isDataType(token.type))
             {
-            case INT:
-                if (next().type == IDENTIFIER)
-                {
-                    if (next(2).type == SEMI)
-                    {
-                        result.nodes.push_back(StatementNode{
-                            Assignment{next(), Token{UNDEFINED}}});
-                        cout << "Variable declaration without value\n";
-                    }
-                    else if (next(2).type == EQUAL)
-                    {
-                        if (next(3).type == INTV)
-                        {
-                            Expression expr = {next(3)};
-                            result.nodes.push_back(StatementNode{
-                                Assignment{next(), expr}});
-                            cout << "Variable declaration with value\n";
-                        }
-                        else
-                        {
-                            abort();
-                        }
-                    }
-                    else
-                    {
-                        abort();
-                    }
-                }
-                else
-                {
-                    abort();
-                }
-                break;
+                createAssign(token.type);
             }
+
             i++;
         }
         cout << "Parsing procedure finished." << endl;
@@ -75,5 +45,29 @@ private:
     {
         cerr << "Error: invalid syntax" << endl;
         exit(EXIT_FAILURE);
+    }
+    void createAssign(TokenType type)
+    {
+        bool isValid = false;
+        if (next().type == IDENTIFIER)
+        {
+            if (next(2).type == SEMI)
+            {
+                isValid = true;
+                result.nodes.push_back(StatementNode{
+                    Assignment{type, next(), Token{UNDEFINED}}});
+            }
+            else if (next(2).type == EQUAL && isDataValue(next(3).type))
+            {
+                isValid = true;
+                Expression expr = {next(3)};
+                result.nodes.push_back(StatementNode{
+                    Assignment{type, next(), expr}});
+            }
+        }
+        if (isValid == false)
+        {
+            abort();
+        }
     }
 };

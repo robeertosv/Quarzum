@@ -5,16 +5,13 @@ enum TokenType
     // keywords
     EXIT = 0,
     RETURN,
-    INT,
+    INT, // MIN_DATATYPE_INDEX (2)
     NUMBER,
     STRING,
     BOOL,
-    VAR,
+    VAR, // MAX_DATATYPE_INDEX (6)
     FUNCTION,
-    COMPLEX,
     CONST,
-    UNDEFINED,
-    NULLV,
     IMPORT,
     FROM,
     IF,
@@ -39,13 +36,16 @@ enum TokenType
     PRIVATE,
     ASYNC,
     AWAIT,
-    TRUE,
-    FALSE,
     UNSIGNED,
     // values
-    INTV = 100,
-    STRINGV,
+    INTV,
+    TRUE,
+    FALSE,
+    NULLV,
+    UNDEFINED,
     NUMBERV,
+    STRINGV,
+
     // symbols
     SEMI = 200,
     PAR_OPEN,
@@ -99,11 +99,10 @@ vector<string> keywords = {
     "string",
     "bool",
     "var",
-    "function",
     "complex",
+    "function",
     "const",
-    "undefined",
-    "null",
+    "unsigned",
     "import",
     "from",
     "if",
@@ -130,7 +129,8 @@ vector<string> keywords = {
     "await",
     "true",
     "false",
-    "unsigned"};
+    "null",
+    "undefined"};
 
 vector<string> symbols = {
     ";", "(", ")", "{", "}", "[", "]", "+", "-", "*", "/", "%", "^", ",", ".", "<",
@@ -147,6 +147,18 @@ int find(vector<string> collection, string object)
         }
     }
     return -1;
+}
+const short unsigned int MIN_DATATYPE_INDEX = 2;
+const short unsigned int MAX_DATATYPE_INDEX = 6;
+bool isDataType(TokenType tokenIndex)
+{
+    return (tokenIndex >= MIN_DATATYPE_INDEX && tokenIndex <= MAX_DATATYPE_INDEX);
+}
+const short unsigned int MIN_DATAVALUE_INDEX = 34;
+const short unsigned int MAX_DATAVALUE_INDEX = 40;
+bool isDataValue(TokenType tokenIndex)
+{
+    return (tokenIndex >= MIN_DATAVALUE_INDEX && tokenIndex <= MAX_DATAVALUE_INDEX);
 }
 
 string charToString(char c)

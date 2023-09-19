@@ -11,6 +11,7 @@ struct Expression
 
 struct Assignment
 {
+    TokenType type;
     Token identifier;
     Expression value;
 };
