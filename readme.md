@@ -1,4 +1,5 @@
 # Quarzum
+<img src="./logo.png" width="250"/>
 
 ## NOTE: This project is currently in developement, all this information is provisional and may change in the future
 
