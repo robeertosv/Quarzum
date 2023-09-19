@@ -4,10 +4,15 @@
 #include <variant>
 using namespace std;
 
+struct Expression
+{
+    Token value;
+};
+
 struct Assignment
 {
     Token identifier;
-    Token value;
+    Expression value;
 };
 // Basic node that contains instructions by itself
 struct StatementNode

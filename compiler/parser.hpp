@@ -19,6 +19,39 @@ public:
             Token token = tokens.at(i);
             switch (token.type)
             {
+            case INT:
+                if (next().type == IDENTIFIER)
+                {
+                    if (next(2).type == SEMI)
+                    {
+                        result.nodes.push_back(StatementNode{
+                            Assignment{next(), Token{UNDEFINED}}});
+                        cout << "Variable declaration without value\n";
+                    }
+                    else if (next(2).type == EQUAL)
+                    {
+                        if (next(3).type == INTV)
+                        {
+                            Expression expr = {next(3)};
+                            result.nodes.push_back(StatementNode{
+                                Assignment{next(), expr}});
+                            cout << "Variable declaration with value\n";
+                        }
+                        else
+                        {
+                            abort();
+                        }
+                    }
+                    else
+                    {
+                        abort();
+                    }
+                }
+                else
+                {
+                    abort();
+                }
+                break;
             }
             i++;
         }
