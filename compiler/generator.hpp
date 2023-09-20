@@ -5,9 +5,8 @@ using namespace std;
 class Generator
 {
 public:
-    inline explicit Generator(SyntaxTree tree)
+    inline explicit Generator(SyntaxTree tree) : nodes(move(tree))
     {
-        nodes = tree;
     }
     string generate()
     {

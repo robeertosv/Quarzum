@@ -91,7 +91,7 @@ struct Token
     optional<string> value;
 };
 
-vector<string> keywords = {
+string keywords[] = {
     "exit",
     "return",
     "int",
@@ -132,16 +132,16 @@ vector<string> keywords = {
     "null",
     "undefined"};
 
-vector<string> symbols = {
+string symbols[] = {
     ";", "(", ")", "{", "}", "[", "]", "+", "-", "*", "/", "%", "^", ",", ".", "<",
     ">", "!", "="};
 
-int find(vector<string> collection, const string object)
+short int find(string collection[], const string object)
 {
-    int l = collection.size();
-    for (unsigned int i = 0; i < l; ++i)
+    int l = collection->length();
+    for (unsigned short int i = 0; i < l; ++i)
     {
-        if (object == collection.at(i))
+        if (object == collection[i])
         {
             return i;
         }
@@ -163,7 +163,6 @@ bool isDataValue(TokenType tokenIndex)
 
 string charToString(const char c)
 {
-    string s;
-    s += c;
+    string s(1, c);
     return s;
 }

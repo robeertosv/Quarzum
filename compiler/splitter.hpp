@@ -7,7 +7,7 @@ public:
     inline explicit Splitter(string src) : data(move(src))
     {
     }
-    vector<Token> split()
+    deque<Token> split()
     {
         unsigned int l = data.length();
         line = 0;
@@ -44,7 +44,7 @@ public:
             else if (c == '"')
             {
                 buffer += c;
-                if (buffer[0] == '"' && buffer.length() > 1)
+                if (buffer.length() > 1 && buffer[0] == '"')
                 {
                     addToken(STRINGV, buffer);
                 }
@@ -92,7 +92,7 @@ public:
     }
 
 private:
-    vector<Token> tokens;
+    deque<Token> tokens;
     string data, buffer;
     unsigned int line;
 
@@ -101,15 +101,15 @@ private:
         tokens.push_back(Token{type, value});
         buffer.clear();
     }
-    void storeIfException(const char value)
-    {
-        if (buffer[0] == '"' || buffer[0] == '/')
-        {
-            buffer += value;
-        }
-    }
     bool isNotException()
     {
         return buffer[0] != '"' && buffer[0] != '/';
+    }
+    void storeIfException(const char value)
+    {
+        if (!isNotException())
+        {
+            buffer += value;
+        }
     }
 };

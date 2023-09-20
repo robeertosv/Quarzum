@@ -1,11 +1,12 @@
 #include <iostream>
 #include <fstream>
 #include <string>
-#include <vector>
+#include <deque>
 #include <optional>
 #include <stdio.h>
 #include <time.h>
 #include <cstring>
+#include <vector>
 
 #include "tokenUtilities.hpp"
 #include "nodeUtilities.hpp"
@@ -18,8 +19,7 @@ using namespace std;
 string getSource(const string path)
 {
     ifstream input(path);
-    string source;
-    string line;
+    string source, line;
     while (getline(input, line))
     {
         source += line + "\n";
@@ -49,15 +49,16 @@ int main(int argc, char *argv[])
     string source = getSource(argv[1]);
 
     Splitter splitter(source);
-    vector<Token> tokens = splitter.split();
+
+    deque<Token> tokens = splitter.split();
+
     clock_t split_t = clock();
     cout << "Split phase finished in " << (double)(split_t - begin) / CLOCKS_PER_SEC << " seconds.\n";
 
     Composer composer(tokens);
-    vector<Token> composed = composer.compose();
+    deque<Token> composed = composer.compose();
     clock_t compose_t = clock();
     cout << "\nCompose phase finished in " << (double)(compose_t - begin) / CLOCKS_PER_SEC << " seconds.\n\n";
-
     clock_t end = clock();
     exec_time += (double)(end - begin) / CLOCKS_PER_SEC;
 

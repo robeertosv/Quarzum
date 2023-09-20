@@ -1,5 +1,1 @@
-int i;
-number j = 3.0;
-string name = "John";
-var random = null;
-bool a = false;
+1 + 1

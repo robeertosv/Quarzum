@@ -5,7 +5,7 @@ using namespace std;
 class Parser
 {
 public:
-    inline explicit Parser(vector<Token> input) : tokens(move(input))
+    inline explicit Parser(deque<Token> input) : tokens(move(input))
     {
     }
 
@@ -30,9 +30,9 @@ public:
 
 private:
     SyntaxTree result;
-    vector<Token> tokens;
+    deque<Token> tokens;
     unsigned int l, i;
-    Token next(short int distance = 1)
+    Token next(const short int distance = 1)
     {
         if (i + distance < l)
         {

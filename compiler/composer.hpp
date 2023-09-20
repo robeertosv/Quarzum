@@ -6,10 +6,10 @@ class Composer
 {
 
 public:
-    inline explicit Composer(vector<Token> tokens) : list(move(tokens))
+    inline explicit Composer(deque<Token> tokens) : list(move(tokens))
     {
     }
-    vector<Token> compose()
+    deque<Token> compose()
     {
         l = list.size();
         i = 0;
@@ -86,11 +86,11 @@ public:
     }
 
 private:
-    vector<Token> list;
-    vector<Token> composedList;
+    deque<Token> list;
+    deque<Token> composedList;
     unsigned int l, i;
     Token token;
-    Token next(short int distance = 1)
+    Token next(const short int distance = 1)
     {
         if (i + distance < l)
         {
