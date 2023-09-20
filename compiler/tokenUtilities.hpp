@@ -136,10 +136,10 @@ vector<string> symbols = {
     ";", "(", ")", "{", "}", "[", "]", "+", "-", "*", "/", "%", "^", ",", ".", "<",
     ">", "!", "="};
 
-int find(vector<string> collection, string object)
+int find(vector<string> collection, const string object)
 {
     int l = collection.size();
-    for (int i = 0; i < l; i++)
+    for (unsigned int i = 0; i < l; ++i)
     {
         if (object == collection.at(i))
         {
@@ -148,20 +148,20 @@ int find(vector<string> collection, string object)
     }
     return -1;
 }
-const short unsigned int MIN_DATATYPE_INDEX = 2;
-const short unsigned int MAX_DATATYPE_INDEX = 6;
+const short unsigned int MIN_DATATYPE_INDEX{2};
+const short unsigned int MAX_DATATYPE_INDEX{6};
 bool isDataType(TokenType tokenIndex)
 {
     return (tokenIndex >= MIN_DATATYPE_INDEX && tokenIndex <= MAX_DATATYPE_INDEX);
 }
-const short unsigned int MIN_DATAVALUE_INDEX = 34;
-const short unsigned int MAX_DATAVALUE_INDEX = 40;
+const short unsigned int MIN_DATAVALUE_INDEX{34};
+const short unsigned int MAX_DATAVALUE_INDEX{40};
 bool isDataValue(TokenType tokenIndex)
 {
     return (tokenIndex >= MIN_DATAVALUE_INDEX && tokenIndex <= MAX_DATAVALUE_INDEX);
 }
 
-string charToString(char c)
+string charToString(const char c)
 {
     string s;
     s += c;

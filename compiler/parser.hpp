@@ -5,9 +5,8 @@ using namespace std;
 class Parser
 {
 public:
-    inline explicit Parser(vector<Token> input)
+    inline explicit Parser(vector<Token> input) : tokens(move(input))
     {
-        tokens = input;
     }
 
     SyntaxTree parse()
@@ -23,7 +22,7 @@ public:
                 createAssign(token.type);
             }
 
-            i++;
+            ++i;
         }
         cout << "Parsing procedure finished." << endl;
         return result;
@@ -51,6 +50,7 @@ private:
         bool isValid = false;
         if (next().type == IDENTIFIER)
         {
+            cout << "Variable declaration" << endl;
             if (next(2).type == SEMI)
             {
                 isValid = true;

@@ -4,15 +4,14 @@ using namespace std;
 class Splitter
 {
 public:
-    inline explicit Splitter(string src)
+    inline explicit Splitter(string src) : data(move(src))
     {
-        data = src;
     }
     vector<Token> split()
     {
         unsigned int l = data.length();
         line = 0;
-        for (unsigned int i = 0; i < l; i++)
+        for (unsigned int i = 0; i < l; ++i)
         {
             char c = data.at(i);
             char next;
@@ -68,12 +67,9 @@ public:
             else if (ispunct(c))
             {
                 storeIfException(c);
-                if (isNotException())
+                if (isNotException() && find(symbols, charToString(c)) >= 0)
                 {
-                    if (find(symbols, charToString(c)) >= 0)
-                    {
-                        addToken(TokenType(find(symbols, charToString(c)) + 200));
-                    }
+                    addToken(TokenType(find(symbols, charToString(c)) + 200));
                 }
             }
             else if (isdigit(c))
@@ -102,13 +98,10 @@ private:
 
     void addToken(TokenType type, optional<string> value = "")
     {
-        Token t;
-        t.type = type;
-        t.value = value;
-        tokens.push_back(t);
+        tokens.push_back(Token{type, value});
         buffer.clear();
     }
-    void storeIfException(char value)
+    void storeIfException(const char value)
     {
         if (buffer[0] == '"' || buffer[0] == '/')
         {

@@ -6,9 +6,8 @@ class Composer
 {
 
 public:
-    inline explicit Composer(vector<Token> tokens)
+    inline explicit Composer(vector<Token> tokens) : list(move(tokens))
     {
-        list = tokens;
     }
     vector<Token> compose()
     {
@@ -81,7 +80,7 @@ public:
                 composeToken(token.type, token.value);
                 break;
             }
-            i++;
+            ++i;
         }
         return composedList;
     }
@@ -101,10 +100,7 @@ private:
     }
     void composeToken(TokenType type, optional<string> value = "")
     {
-        Token composed;
-        composed.type = type;
-        composed.value = value;
-        composedList.push_back(composed);
+        composedList.push_back(Token{type, value});
     }
     void composeIf(TokenType def, TokenType nextType, TokenType result)
     {

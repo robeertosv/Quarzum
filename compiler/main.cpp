@@ -15,7 +15,7 @@
 #include "generator.hpp"
 
 using namespace std;
-string getSource(string path)
+string getSource(const string path)
 {
     ifstream input(path);
     string source;
@@ -28,7 +28,7 @@ string getSource(string path)
 }
 void debug(vector<Token> composed)
 {
-    for (int i = 0; i < composed.size(); i++)
+    for (unsigned short int i = 0; i < composed.size(); i++)
     {
         cout << composed.at(i).type;
         cout << " | ";
@@ -37,7 +37,7 @@ void debug(vector<Token> composed)
 }
 int main(int argc, char *argv[])
 {
-    double exec_time = 0.0;
+    double exec_time{0.0};
     clock_t begin = clock();
     if (argc < 2)
     {
@@ -67,8 +67,7 @@ int main(int argc, char *argv[])
     // Generator generator(nodes);
     // string assembly = generator.generate();
 
-    cout << "Operation finished in " << exec_time << " seconds. Success!" << endl
-         << endl;
+    cout << "Operation finished in " << exec_time << " seconds. Success!\n\n";
 
     // cout << assembly;
     return EXIT_SUCCESS;
