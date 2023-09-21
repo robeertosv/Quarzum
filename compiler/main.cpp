@@ -6,7 +6,6 @@
 #include <stdio.h>
 #include <time.h>
 #include <cstring>
-#include <vector>
 
 #include "tokenUtilities.hpp"
 #include "nodeUtilities.hpp"
@@ -26,7 +25,7 @@ string getSource(const string path)
     }
     return source;
 }
-void debug(vector<Token> composed)
+void debug(deque<Token> composed)
 {
     for (unsigned short int i = 0; i < composed.size(); i++)
     {
@@ -47,23 +46,22 @@ int main(int argc, char *argv[])
     cout << "\nCompiling " << argv[1] << "...\n-------------------------\n\n";
 
     string source = getSource(argv[1]);
-
+    // Splitting into single tokens
     Splitter splitter(source);
-
     deque<Token> tokens = splitter.split();
-
+    debug(tokens);
     clock_t split_t = clock();
     cout << "Split phase finished in " << (double)(split_t - begin) / CLOCKS_PER_SEC << " seconds.\n";
-
-    Composer composer(tokens);
-    deque<Token> composed = composer.compose();
-    clock_t compose_t = clock();
-    cout << "\nCompose phase finished in " << (double)(compose_t - begin) / CLOCKS_PER_SEC << " seconds.\n\n";
+    // Composing tokens
+    // Composer composer(tokens);
+    // deque<Token> composed = composer.compose();
+    // clock_t compose_t = clock();
+    // cout << "\nCompose phase finished in " << (double)(compose_t - begin) / CLOCKS_PER_SEC << " seconds.\n\n";
+    // Parsing tokens
+    // Parser parser(composed);
+    // SyntaxTree nodes = parser.parse();
     clock_t end = clock();
     exec_time += (double)(end - begin) / CLOCKS_PER_SEC;
-
-    Parser parser(composed);
-    SyntaxTree nodes = parser.parse();
 
     // Generator generator(nodes);
     // string assembly = generator.generate();

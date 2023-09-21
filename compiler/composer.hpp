@@ -18,49 +18,49 @@ public:
             token = list.at(i);
             switch (token.type)
             {
-            case NOT_SYMBOL:
-                composeIf(NOT, EQUAL, NOT_EQUAL);
-                break;
-            case LESS:
-                composeIf(LESS, EQUAL, LESS_EQUAL);
-                break;
-            case GREATER:
-                composeIf(GREATER, EQUAL, GREATER_EQUAL);
-                break;
-            case PLUS:
-                if (next().type == PLUS)
-                {
-                    composeToken(PLUS_UNARY);
-                    i++;
-                }
-                else
-                {
-                    composeIf(PLUS, EQUAL, PLUS_EQUAL);
-                }
-                break;
-            case MINUS:
-                if (next().type == MINUS)
-                {
-                    composeToken(MINUS_UNARY);
-                    i++;
-                }
-                else
-                {
-                    composeIf(MINUS, EQUAL, MINUS_EQUAL);
-                }
-                break;
-            case PRODUCT:
-                composeIf(PRODUCT, EQUAL, PRODUCT_EQUAL);
-                break;
-            case DIVIDE:
-                composeIf(DIVIDE, EQUAL, DIVIDE_EQUAL);
-                break;
-            case DMODULE:
-                composeIf(DMODULE, EQUAL, DMODULE_EQUAL);
-                break;
-            case POWER:
-                composeIf(POWER, EQUAL, POWER_EQUAL);
-                break;
+            // case NOT_SYMBOL:
+            //     composeIf(NOT, EQUAL, NOT_EQUAL);
+            //     break;
+            // case LESS:
+            //     composeIf(LESS, EQUAL, LESS_EQUAL);
+            //     break;
+            // case GREATER:
+            //     composeIf(GREATER, EQUAL, GREATER_EQUAL);
+            //     break;
+            // case PLUS:
+            //     if (next().type == PLUS)
+            //     {
+            //         composeToken(PLUS_UNARY);
+            //         i++;
+            //     }
+            //     else
+            //     {
+            //         composeIf(PLUS, EQUAL, PLUS_EQUAL);
+            //     }
+            //     break;
+            // case MINUS:
+            //     if (next().type == MINUS)
+            //     {
+            //         composeToken(MINUS_UNARY);
+            //         i++;
+            //     }
+            //     else
+            //     {
+            //         composeIf(MINUS, EQUAL, MINUS_EQUAL);
+            //     }
+            //     break;
+            // case PRODUCT:
+            //     composeIf(PRODUCT, EQUAL, PRODUCT_EQUAL);
+            //     break;
+            // case DIVIDE:
+            //     composeIf(DIVIDE, EQUAL, DIVIDE_EQUAL);
+            //     break;
+            // case DMODULE:
+            //     composeIf(DMODULE, EQUAL, DMODULE_EQUAL);
+            //     break;
+            // case POWER:
+            //     composeIf(POWER, EQUAL, POWER_EQUAL);
+            //     break;
             case EQUAL:
                 composeIf(EQUAL, EQUAL, IS_EQUAL);
                 break;
