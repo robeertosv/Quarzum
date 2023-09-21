@@ -21,7 +21,7 @@ string getSource(const string path)
     string source, line;
     while (getline(input, line))
     {
-        source += line + "\n";
+        source += line + '\n';
     }
     return source;
 }
@@ -53,13 +53,13 @@ int main(int argc, char *argv[])
     clock_t split_t = clock();
     cout << "Split phase finished in " << (double)(split_t - begin) / CLOCKS_PER_SEC << " seconds.\n";
     // Composing tokens
-    // Composer composer(tokens);
-    // deque<Token> composed = composer.compose();
-    // clock_t compose_t = clock();
-    // cout << "\nCompose phase finished in " << (double)(compose_t - begin) / CLOCKS_PER_SEC << " seconds.\n\n";
+    Composer composer(tokens);
+    deque<Token> composed = composer.compose();
+    clock_t compose_t = clock();
+    cout << "\nCompose phase finished in " << (double)(compose_t - begin) / CLOCKS_PER_SEC << " seconds.\n\n";
     // Parsing tokens
-    // Parser parser(composed);
-    // SyntaxTree nodes = parser.parse();
+    Parser parser(composed);
+    SyntaxTree nodes = parser.parse();
     clock_t end = clock();
     exec_time += (double)(end - begin) / CLOCKS_PER_SEC;
 

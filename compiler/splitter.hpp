@@ -9,9 +9,9 @@ public:
     }
     deque<Token> split()
     {
-        unsigned int l = data.length();
+        l = data.length();
         line = 0;
-        for (unsigned int i = 0; i < l; ++i)
+        while (i < l)
         {
             char c = data.at(i);
             char next;
@@ -38,8 +38,7 @@ public:
             }
             else if (c == '/' && (next == '/' || next == '*'))
             {
-                buffer += c;
-                buffer += next;
+                buffer += c + next;
             }
             else if (c == '"')
             {
@@ -87,6 +86,7 @@ public:
                 cerr << "-> " << data.substr(0, data.find("\n")) << endl;
                 exit(EXIT_FAILURE);
             }
+            ++i;
         }
         return tokens;
     }
@@ -94,7 +94,7 @@ public:
 private:
     deque<Token> tokens;
     string data, buffer;
-    unsigned int line;
+    unsigned int line, l, i;
 
     void addToken(TokenType type, optional<string> value = "")
     {
