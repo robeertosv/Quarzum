@@ -19,7 +19,11 @@ public:
             {
                 next = data.at(i + 1);
             }
-            // Token search
+            /*
+
+                Searching for tokens
+
+            */
             if (c == ' ')
             {
                 storeIfException(c);
@@ -48,6 +52,7 @@ public:
                     addToken(STRINGV, buffer);
                 }
             }
+            // Keywords and identifiers
             else if (isalpha(c))
             {
                 buffer += c;
@@ -63,6 +68,7 @@ public:
                     }
                 }
             }
+            // Punctuation signs
             else if (ispunct(c))
             {
                 storeIfException(c);
@@ -71,6 +77,7 @@ public:
                     addToken(TokenType(find(symbols, charToString(c)) + 200));
                 }
             }
+            // Numeric characters
             else if (isdigit(c))
             {
                 buffer += c;
