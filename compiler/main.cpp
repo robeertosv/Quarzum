@@ -9,6 +9,7 @@
 
 #include "utilities.hpp"
 #include "lexer.hpp"
+#include "parser.hpp"
 
 using namespace std;
 string getSource(const string path)
@@ -43,8 +44,10 @@ int main(int argc, char *argv[])
 
     string source = getSource(argv[1]);
 
-    deque<Token> tokens = tokenize(source);
+    Lexer lexer = Lexer(source);
+    deque<Token> tokens = lexer.tokenize();
     debug(tokens);
+    // ExitStatement exit = parse(tokens);
     clock_t split_t = clock();
     cout << "Split phase finished in " << (double)(split_t - begin) / CLOCKS_PER_SEC << " seconds.\n";
 
