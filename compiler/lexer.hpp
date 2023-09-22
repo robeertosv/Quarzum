@@ -44,7 +44,7 @@ public:
             }
             else if (!isspace(c))
             {
-                cout << "Lexical error in line " << line << endl;
+                cout << "Lexical error at line " << line << ".\n";
                 exit(EXIT_FAILURE);
             }
             i++;
@@ -55,7 +55,7 @@ public:
 private:
     string m_src;
     deque<Token> tokens;
-    short unsigned int size, line, i = 0;
+    unsigned int size, line, i = 0;
     string buffer;
     bool isEOF()
     {

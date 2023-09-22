@@ -47,7 +47,9 @@ int main(int argc, char *argv[])
     Lexer lexer = Lexer(source);
     deque<Token> tokens = lexer.tokenize();
     debug(tokens);
-    // ExitStatement exit = parse(tokens);
+
+    Parser parser = Parser(tokens);
+    ExitStatement exit = parser.parse();
     clock_t split_t = clock();
     cout << "Split phase finished in " << (double)(split_t - begin) / CLOCKS_PER_SEC << " seconds.\n";
 
