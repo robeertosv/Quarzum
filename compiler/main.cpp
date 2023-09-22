@@ -2,7 +2,7 @@
 #include <fstream>
 #include <string>
 #include <deque>
-#include <optional>
+#include <experimental/optional>
 #include <stdio.h>
 #include <time.h>
 #include <cstring>
@@ -10,6 +10,7 @@
 #include "utilities.hpp"
 #include "lexer.hpp"
 #include "parser.hpp"
+#include "generator.hpp"
 
 using namespace std;
 string getSource(const string path)
@@ -50,8 +51,16 @@ int main(int argc, char *argv[])
 
     Parser parser = Parser(tokens);
     ExitStatement exit = parser.parse();
+
+    Generator generator = Generator(exit);
+    string assembly = generator.generate();
+
+    cout << assembly << endl;
+
     clock_t split_t = clock();
     cout << "Split phase finished in " << (double)(split_t - begin) / CLOCKS_PER_SEC << " seconds.\n";
 
+    fstream file("out.asm", ios::out);
+    file << assembly;
     return EXIT_SUCCESS;
 }

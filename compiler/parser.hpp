@@ -5,7 +5,7 @@ class Parser
 public:
     Parser(deque<Token> tokens) : m_tokens(move(tokens)) {}
 
-    optional<Expr> parse_expr()
+    std::experimental::optional<Expr> parse_expr()
     {
         if (next().type == INT_LITERAL)
         {

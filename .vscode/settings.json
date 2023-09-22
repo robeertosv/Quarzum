@@ -3,7 +3,10 @@
         "xlocale": "cpp",
         "xstring": "cpp",
         "iostream": "cpp",
-        "xutility": "cpp"
+        "xutility": "cpp",
+        "system_error": "cpp",
+        "iosfwd": "cpp",
+        "optional": "cpp"
     },
     "C_Cpp.errorSquiggles": "disabled"
 }
