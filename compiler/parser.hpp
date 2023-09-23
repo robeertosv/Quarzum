@@ -25,7 +25,7 @@ public:
             case EXIT:
                 if (auto expr = parse_expr())
                 {
-                    tree.childs.push_back(ExitStatement{expr.value()});
+                    tree.childs.push_back(Exit{expr.value()});
                 }
                 else
                 {

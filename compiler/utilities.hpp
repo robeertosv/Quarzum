@@ -21,17 +21,24 @@ struct Expr
     Token literal;
 };
 
-struct ExitStatement
+struct Exit
 {
     Expr value;
 };
 
-struct IntAssign
+struct Assign
 {
+    TokenType type;
+    Token ident;
+    Expr value;
+};
+struct ReAssign
+{
+    Token ident;
     Expr value;
 };
 
 struct Root
 {
-    deque<ExitStatement> childs;
+    deque<Exit> childs;
 };
