@@ -24,6 +24,10 @@ public:
                     {
                         addToken(EXIT, "exit");
                     }
+                    else if (buffer == "int")
+                    {
+                        addToken(INT_KEYWORD, "int");
+                    }
                     else
                     {
                         addToken(IDENTIFIER, buffer);
@@ -41,6 +45,10 @@ public:
             else if (ispunct(c))
             {
                 // in developement
+                if (c == '=')
+                {
+                    addToken(EQUAL, "=");
+                }
             }
             else if (!isspace(c))
             {

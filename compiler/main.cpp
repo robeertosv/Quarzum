@@ -15,6 +15,7 @@
 using namespace std;
 string getSource(const string path)
 {
+    /* Reads the file and returns its content */
     ifstream input(path);
     string source, line;
     while (getline(input, line))
@@ -50,9 +51,9 @@ int main(int argc, char *argv[])
     debug(tokens);
 
     Parser parser = Parser(tokens);
-    ExitStatement exit = parser.parse();
+    Root exit = parser.parse();
 
-    Generator generator = Generator(exit);
+    Generator generator = Generator(exit.childs.at(0));
     string assembly = generator.generate();
 
     cout << assembly << endl;

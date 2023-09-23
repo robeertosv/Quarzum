@@ -1,1 +1,2 @@
-exit 2
+exit 7
+int i = 0

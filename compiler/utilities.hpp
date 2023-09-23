@@ -5,6 +5,8 @@ enum TokenType
 {
     EXIT,
     INT_LITERAL,
+    INT_KEYWORD,
+    EQUAL,
     IDENTIFIER
 };
 
@@ -22,4 +24,14 @@ struct Expr
 struct ExitStatement
 {
     Expr value;
+};
+
+struct IntAssign
+{
+    Expr value;
+};
+
+struct Root
+{
+    deque<ExitStatement> childs;
 };
