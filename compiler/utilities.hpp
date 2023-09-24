@@ -24,7 +24,10 @@ enum TokenType
     EQUAL,
     IDENTIFIER
 };
-
+bool isOperator(char value)
+{
+    return (value == '+' || value == '-' || value == '*' || value == '/' || value == '%' || value == '^');
+};
 struct Token
 {
     TokenType type;

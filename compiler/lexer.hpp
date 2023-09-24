@@ -49,6 +49,11 @@ public:
                 {
                     addToken(EQUAL, "=");
                 }
+                else if (isOperator(c))
+                {
+                    string s(c, 1);
+                    addToken(OPERATOR, s);
+                }
             }
             else if (!isspace(c))
             {
