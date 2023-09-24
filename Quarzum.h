@@ -7,10 +7,10 @@
 #include <time.h>
 #include <map>
 
-#include <compile.h>
-
-#include "TokenType.h"
 #include "utilities.hpp"
-#include "lexer.hpp"
-#include "parser.hpp"
-#include "generator.hpp"
+#include "compile.h"
+#include "lib/tokentype.h"
+#include "lib/error.h"
+#include "internal/lexer.hpp"
+#include "internal/parser.hpp"
+#include "internal/generator.hpp"
