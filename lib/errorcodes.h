@@ -1,0 +1,7 @@
+enum Errorcode
+{
+    FILE_NOT_FOUND,
+    INVALID_FORMAT,
+    UNEXPECTED_TOKEN,
+    SYNTAX_ERROR
+};

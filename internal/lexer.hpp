@@ -56,7 +56,7 @@ public:
             }
             else if (!isspace(c))
             {
-                throwError(2);
+                throwError(UNEXPECTED_TOKEN);
             }
             i++;
         }

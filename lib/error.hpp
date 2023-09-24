@@ -1,5 +1,3 @@
-#pragma once
-
 std::string errors[] = {
     "File not found",
     "Format not supported",

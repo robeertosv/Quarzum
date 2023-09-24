@@ -92,3 +92,12 @@ void debug(deque<Token> composed)
         cout << composed.at(i).type << " | " << composed.at(i).value << endl;
     }
 }
+void validateFormat(char *argv[])
+{
+    string path;
+    path = argv[1];
+    if (path.substr(path.size() - 3) != ".qz")
+    {
+        throwError(INVALID_FORMAT);
+    }
+}

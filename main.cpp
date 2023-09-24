@@ -8,16 +8,10 @@ int main(int argc, char *argv[])
 {
     if (argc < 2)
     {
-        throwError(0);
+        throwError(FILE_NOT_FOUND);
     }
-    std::string path;
-    path = argv[1];
-    if (path.substr(path.size() - 3) != ".qz")
-    {
-        throwError(1);
-    }
+    validateFormat(argv);
     std::string source = getSource(argv[1]);
-
     /* Compiles the source code step by step */
     Lexer lexer = Lexer(source);
     std::deque<Token> tokens = lexer.tokenize();
