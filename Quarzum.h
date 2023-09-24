@@ -21,3 +21,5 @@
 
 */
 #include "internal/lexer.hpp"
+
+#include "internal/compile.hpp"
