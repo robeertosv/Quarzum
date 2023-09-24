@@ -92,3 +92,12 @@ void debug(deque<Token> composed)
         cout << composed.at(i).type << " | " << composed.at(i).value << endl;
     }
 }
+string errors[] = {
+    "File not found",
+    "Format not supported"};
+
+void throwError(int code)
+{
+    std::cerr << "[ ERROR ] - " << errors[code] << " - Error code: " << code << std::endl;
+    exit(EXIT_FAILURE);
+}
