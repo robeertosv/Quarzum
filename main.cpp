@@ -1,6 +1,4 @@
 #include "Quarzum.h"
-
-using namespace std;
 /*
 
     Minified main.cpp, all the procedures are into Quarzum.h
@@ -12,11 +10,17 @@ int main(int argc, char *argv[])
     {
         throwError(0);
     }
-    string source = getSource(argv[1]);
+    std::string path;
+    path = argv[1];
+    if (path.substr(path.size() - 3) != ".qz")
+    {
+        throwError(1);
+    }
+    std::string source = getSource(argv[1]);
 
     /* Compiles the source code step by step */
     Lexer lexer = Lexer(source);
-    deque<Token> tokens = lexer.tokenize();
+    std::deque<Token> tokens = lexer.tokenize();
     debug(tokens);
 
     // Parser parser = Parser(tokens);

@@ -9,7 +9,7 @@ bool isSizeModifier(string value)
 {
     return (value == "x8" || value == "x16" || value == "x32" || value == "x64");
 };
-std::map<string, int> keywords = {
+map<string, int> keywords = {
     {"exit", 0},
     {"return", 1},
     {"int", 3},
@@ -91,13 +91,4 @@ void debug(deque<Token> composed)
     {
         cout << composed.at(i).type << " | " << composed.at(i).value << endl;
     }
-}
-string errors[] = {
-    "File not found",
-    "Format not supported"};
-
-void throwError(int code)
-{
-    std::cerr << "[ ERROR ] - " << errors[code] << " - Error code: " << code << std::endl;
-    exit(EXIT_FAILURE);
 }

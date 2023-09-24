@@ -56,8 +56,7 @@ public:
             }
             else if (!isspace(c))
             {
-                cout << "Lexical error at line " << line << ".\n";
-                exit(EXIT_FAILURE);
+                throwError(2);
             }
             i++;
         }
