@@ -10,7 +10,8 @@ enum TokenType
     STRING_KEYWORD,
     NUMBER_LITERAL,
     NUMBER_KEYWORD,
-    BOOL_LITERAL,
+    TRUE,
+    FALSE,
     BOOL_KEYWORD,
     VAR_KEYWORD,
     FUNCTION_KEYWORD,
@@ -20,6 +21,7 @@ enum TokenType
     CLASS_KEYWORD,
     PUBLIC_KEYWORD,
     PRIVATE_KEYWORD,
+    MODULE_KEYWORD,
     // Operators
     OPERATOR,
     AND,

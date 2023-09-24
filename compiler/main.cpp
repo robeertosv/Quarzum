@@ -5,6 +5,7 @@
 #include <experimental/optional>
 #include <stdio.h>
 #include <time.h>
+#include <map>
 
 #include "TokenType.c"
 #include "utilities.hpp"
