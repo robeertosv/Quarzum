@@ -72,3 +72,23 @@ struct Root
 {
     deque<Exit> childs;
 };
+
+string getSource(const string path)
+{
+    /* Reads the file and returns its content */
+    ifstream input(path);
+    string source, line;
+    while (getline(input, line))
+    {
+        source += line + '\n';
+    }
+    return source;
+}
+void debug(deque<Token> composed)
+{
+    /* Shows in console a list of tokens */
+    for (unsigned short int i = 0; i < composed.size(); i++)
+    {
+        cout << composed.at(i).type << " | " << composed.at(i).value << endl;
+    }
+}
