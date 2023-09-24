@@ -1,29 +1,6 @@
 #pragma once
 using namespace std;
 
-enum TokenType
-{
-    // Exit statements
-    EXIT,
-    RETURN,
-    // Data types and keywords
-    INT_LITERAL,
-    INT_KEYWORD,
-    STRING_LITERAL,
-    STRING_KEYWORD,
-    NUMBER_LITERAL,
-    NUMBER_KEYWORD,
-    BOOL_LITERAL,
-    BOOL_KEYWORD,
-    VAR_KEYWORD,
-    FUNCTION_KEYWORD,
-    NULL_KEYWORD,
-    // Operators
-    OPERATOR,
-    // Others
-    EQUAL,
-    IDENTIFIER
-};
 bool isOperator(char value)
 {
     return (value == '+' || value == '-' || value == '*' || value == '/' || value == '%' || value == '^');
@@ -33,7 +10,6 @@ struct Token
     TokenType type;
     string value;
 };
-
 struct Operator
 {
     TokenType op;

@@ -5,8 +5,8 @@
 #include <experimental/optional>
 #include <stdio.h>
 #include <time.h>
-#include <cstring>
 
+#include "TokenType.c"
 #include "utilities.hpp"
 #include "lexer.hpp"
 #include "parser.hpp"
@@ -28,9 +28,7 @@ void debug(deque<Token> composed)
 {
     for (unsigned short int i = 0; i < composed.size(); i++)
     {
-        cout << composed.at(i).type;
-        cout << " | ";
-        cout << composed.at(i).value << endl;
+        cout << composed.at(i).type << " | " << composed.at(i).value << endl;
     }
 }
 int main(int argc, char *argv[])

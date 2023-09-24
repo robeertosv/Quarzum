@@ -1,4 +1,5 @@
 {
+    "C_Cpp.default.cppStandard": "c++17",
     "files.associations": {
         "xlocale": "cpp",
         "xstring": "cpp",
@@ -9,5 +10,6 @@
         "optional": "cpp",
         "cstring": "cpp"
     },
-    "C_Cpp.errorSquiggles": "disabled"
+    "C_Cpp.errorSquiggles": "enabled",
+    "cmake.sourceDirectory": "C:/Users/Marcos/Desktop/Programación/quarzumc/compiler"
 }
