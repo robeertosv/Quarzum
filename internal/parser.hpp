@@ -1,4 +1,3 @@
-
 #pragma once
 class Parser
 {
@@ -17,7 +16,7 @@ public:
     Root parse()
     {
         /* Converts tokens into an AST */
-        while (i < size)
+        while (i < m_tokens.size())
         {
             t = m_tokens.get(i);
             switch (t.type)
@@ -26,11 +25,9 @@ public:
                 if (auto expr = parse_expr())
                 {
                     tree.childs.push_back(Exit{expr.value()});
+                    break;
                 }
-                else
-                {
-                    throwError(SYNTAX_ERROR);
-                }
+                throwError(SYNTAX_ERROR);
                 break;
             case INT_KEYWORD:
                 if (next().type == IDENTIFIER)
@@ -40,13 +37,18 @@ public:
                         if (auto expr = parse_expr(3))
                         {
                             // Push-back an int assign with value
+                            break;
                         }
+                        throwError(EXPECTED_EXPR);
                     }
                     else
                     {
                         // Push-back an int assign without value
                     }
+                    break;
                 }
+                throwError(SYNTAX_ERROR);
+                break;
             default:
                 break;
             }
@@ -59,7 +61,6 @@ private:
     TokenList m_tokens;
     Token t;
     unsigned int i = 0;
-    unsigned int size = m_tokens.size();
     Root tree;
     Token next(short unsigned int distance = 1)
     {

@@ -2,7 +2,8 @@ std::string errors[] = {
     "File not found",
     "Format not supported",
     "Unexpected token",
-    "Syntax error"};
+    "Syntax error",
+    "Expected expression"};
 
 void throwError(int code)
 {
