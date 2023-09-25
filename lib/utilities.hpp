@@ -36,11 +36,7 @@ int findKeyword(string keyword)
 {
     return keywords.at(keyword);
 }
-struct Token
-{
-    TokenType type;
-    string value;
-};
+
 struct Operator
 {
     TokenType op;

@@ -1,11 +1,11 @@
-#pragma once
 
+#pragma once
 class Parser
 {
 public:
-    Parser(deque<Token> tokens) : m_tokens(move(tokens)) {}
+    Parser(TokenList tokens) : m_tokens(move(tokens)) {}
 
-    std::experimental::optional<Expr> parse_expr(unsigned short int distance = 1)
+    experimental::optional<Expr> parse_expr(unsigned short int distance = 1)
     {
         if (next(distance).type == INT_LITERAL)
         {
@@ -19,7 +19,7 @@ public:
         /* Converts tokens into an AST */
         while (i < size)
         {
-            t = m_tokens.at(i);
+            t = m_tokens.get(i);
             switch (t.type)
             {
             case EXIT:
@@ -29,7 +29,7 @@ public:
                 }
                 else
                 {
-                    error();
+                    throwError(SYNTAX_ERROR);
                 }
                 break;
             case INT_KEYWORD:
@@ -56,26 +56,13 @@ public:
     }
 
 private:
-    deque<Token> m_tokens;
+    TokenList m_tokens;
     Token t;
     unsigned int i = 0;
     unsigned int size = m_tokens.size();
     Root tree;
-
-    void error()
-    {
-        /* Shows a Syntax Error message */
-        cout << "Syntax Error \n";
-        exit(EXIT_FAILURE);
-    }
-
     Token next(short unsigned int distance = 1)
     {
-        /* Returns the next token in the list, if it exists */
-        if (i + distance < size)
-        {
-            return m_tokens.at(i + distance);
-        }
-        return {};
+        return m_tokens.get(i + distance);
     }
 };

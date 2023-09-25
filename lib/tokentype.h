@@ -1,3 +1,5 @@
+
+
 enum TokenType
 {
     // Exit statements
@@ -50,4 +52,9 @@ enum TokenType
     X64,
     // Others
     IDENTIFIER
+};
+struct Token
+{
+    TokenType type;
+    string value;
 };

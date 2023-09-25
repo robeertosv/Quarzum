@@ -3,7 +3,7 @@ class Lexer
 {
 public:
     Lexer(string source) : m_src(move(source)) {}
-    deque<Token> tokenize()
+    TokenList tokenize()
     {
         /* Divides the string into single tokens */
         size = m_src.length();
@@ -65,7 +65,7 @@ public:
 
 private:
     string m_src;
-    deque<Token> tokens;
+    TokenList tokens;
     unsigned int size, line, i = 0;
     string buffer;
     bool isEOF()
@@ -86,7 +86,7 @@ private:
     void addToken(TokenType type, string value)
     {
         /* Adds a new token to the deque */
-        tokens.push_back({type, value});
+        tokens.addToken(type, value);
         buffer.clear();
     }
 };

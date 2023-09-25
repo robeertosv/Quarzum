@@ -1,6 +1,9 @@
 void compile(string source)
 {
     Lexer lexer = Lexer(source);
-    deque<Token> tokens = lexer.tokenize();
-    debug(tokens);
+    TokenList tokens = lexer.tokenize();
+    debug(tokens.getItems());
+
+    Parser parser = Parser(tokens);
+    Root root = parser.parse();
 }
