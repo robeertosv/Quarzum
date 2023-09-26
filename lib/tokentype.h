@@ -5,6 +5,8 @@ enum TokenType
     // Exit statements
     EXIT,
     RETURN,
+    IMPORT,
+    FROM,
     // Data types and keywords
     INT_LITERAL,
     INT_KEYWORD,

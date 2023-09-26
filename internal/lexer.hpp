@@ -14,29 +14,36 @@ public:
             {
                 line++;
             }
+            else if (c == '"')
+            {
+                buffer += c;
+                if (buffer[0] == '"' && buffer.length() > 1)
+                {
+                    addToken(STRING_LITERAL, buffer);
+                }
+            }
             else if (isalpha(c))
             {
                 buffer += c;
-                if (!isEOF() && !isalnum(next()))
+                if (!isException() && !isEOF() && !isalnum(next()))
                 {
                     if (buffer == "exit")
                     {
                         addToken(EXIT, "exit");
+                        break;
                     }
                     else if (buffer == "int")
                     {
                         addToken(INT_KEYWORD, "int");
+                        break;
                     }
-                    else
-                    {
-                        addToken(IDENTIFIER, buffer);
-                    }
+                    addToken(IDENTIFIER, buffer);
                 }
             }
             else if (isdigit(c))
             {
                 buffer += c;
-                if (!isEOF() && !isdigit(next()))
+                if (!isException() && !isEOF() && !isdigit(next()))
                 {
                     addToken(INT_LITERAL, buffer);
                 }
@@ -44,17 +51,17 @@ public:
             else if (ispunct(c))
             {
                 // in developement
-                if (c == '=')
+                if (!isException() && c == '=')
                 {
                     addToken(EQUAL, "=");
                 }
-                else if (isOperator(c))
+                else if (!isException() && isOperator(c))
                 {
                     string s(c, 1);
                     addToken(OPERATOR, s);
                 }
             }
-            else if (!isspace(c))
+            else if (!isException() && !isspace(c))
             {
                 throwError(UNEXPECTED_TOKEN);
             }
@@ -88,5 +95,9 @@ private:
         /* Adds a new token to the deque */
         tokens.addToken(type, value);
         buffer.clear();
+    }
+    bool isException()
+    {
+        return buffer[0] == '=';
     }
 };

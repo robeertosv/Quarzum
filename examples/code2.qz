@@ -1,0 +1,3 @@
+module Extern{
+    int j = 3
+}

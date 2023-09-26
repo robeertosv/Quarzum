@@ -1,2 +1,3 @@
-exit 7
+import Extern from "./code2.qz"
 int i = 0
+exit j

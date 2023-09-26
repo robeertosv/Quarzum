@@ -6,4 +6,7 @@ void compile(string source)
 
     Parser parser = Parser(tokens);
     Root root = parser.parse();
+
+    Linker linker = Linker(root);
+    Root AST = linker.link();
 }
