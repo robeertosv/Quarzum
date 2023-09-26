@@ -26,4 +26,5 @@ using namespace std;
 
 #include "internal/lexer.hpp"
 #include "internal/parser.hpp"
+#include "internal/linker.hpp"
 #include "internal/compile.hpp"

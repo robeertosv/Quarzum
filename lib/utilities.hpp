@@ -64,9 +64,16 @@ struct ReAssign
     Expr value;
 };
 
+struct Import
+{
+    Token id;
+    string path;
+};
+
 struct Root
 {
     deque<Exit> childs;
+    deque<Import> imports;
 };
 
 string getSource(const string path)
