@@ -82,6 +82,10 @@ string getSource(const string path)
 {
     /* Reads the file and returns its content */
     ifstream input(path);
+    if (input.fail())
+    {
+        throwError(FILE_NOT_FOUND);
+    }
     string source, line;
     while (getline(input, line))
     {

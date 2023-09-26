@@ -21,6 +21,12 @@ public:
             t = m_tokens.get(i);
             switch (t.type)
             {
+            case IMPORT:
+                if (next().type == IDENTIFIER && next(2).type == FROM && next(3).type == STRING_LITERAL)
+                {
+                    tree.imports.push_back({next(), next(3).value});
+                }
+                break;
             case EXIT:
                 if (auto expr = parse_expr())
                 {

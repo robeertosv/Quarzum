@@ -30,14 +30,23 @@ public:
                     if (buffer == "exit")
                     {
                         addToken(EXIT, "exit");
-                        break;
                     }
                     else if (buffer == "int")
                     {
                         addToken(INT_KEYWORD, "int");
-                        break;
                     }
-                    addToken(IDENTIFIER, buffer);
+                    else if (buffer == "import")
+                    {
+                        addToken(IMPORT, "import");
+                    }
+                    else if (buffer == "from")
+                    {
+                        addToken(FROM, "from");
+                    }
+                    else
+                    {
+                        addToken(IDENTIFIER, buffer);
+                    }
                 }
             }
             else if (isdigit(c))
@@ -51,11 +60,15 @@ public:
             else if (ispunct(c))
             {
                 // in developement
-                if (!isException() && c == '=')
+                if (isException())
+                {
+                    buffer += c;
+                }
+                else if (c == '=')
                 {
                     addToken(EQUAL, "=");
                 }
-                else if (!isException() && isOperator(c))
+                else if (isOperator(c))
                 {
                     string s(c, 1);
                     addToken(OPERATOR, s);
@@ -98,6 +111,6 @@ private:
     }
     bool isException()
     {
-        return buffer[0] == '=';
+        return buffer[0] == '"';
     }
 };
