@@ -1,5 +1,3 @@
-
-
 enum TokenType
 {
     // Exit statements
@@ -52,6 +50,7 @@ enum TokenType
     X16,
     X32,
     X64,
+    THIS,
     // Others
     IDENTIFIER
 };
