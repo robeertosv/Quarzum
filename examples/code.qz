@@ -1,3 +1,2 @@
-import Extern from "./examples/code2.qz"
 int i = 0
 exit 3
